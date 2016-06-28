@@ -19,7 +19,7 @@
             <div class="media-bd-left">
                 <span>￥128</span>
                 <ul>
-                  <li><span class="icon">&#xe600;</span>2</li>
+                  <li><span class="icon">&#xe605;</span>2</li>
                   <li><span class="icon">&#xe601;</span>10</li>
                 </ul>
             </div>
@@ -36,7 +36,7 @@
             <div class="media-bd-left">
                 <span>￥128</span>
                 <ul>
-                  <li><span class="icon">&#xe600;</span>2</li>
+                  <li><span class="icon">&#xe605;</span>2</li>
                   <li><span class="icon">&#xe601;</span>10</li>
                 </ul>
             </div>
@@ -53,7 +53,7 @@
             <div class="media-bd-left">
                 <span>￥128</span>
                 <ul>
-                  <li><span class="icon">&#xe600;</span>2</li>
+                  <li><span class="icon">&#xe605;</span>2</li>
                   <li><span class="icon">&#xe601;</span>10</li>
                 </ul>
             </div>
@@ -70,7 +70,7 @@
             <div class="media-bd-left">
                 <span>￥128</span>
                 <ul>
-                  <li><span class="icon">&#xe600;</span>2</li>
+                  <li><span class="icon">&#xe605;</span>2</li>
                   <li><span class="icon">&#xe601;</span>10</li>
                 </ul>
             </div>
@@ -87,7 +87,7 @@
             <div class="media-bd-left">
                 <span>￥128</span>
                 <ul>
-                  <li><span class="icon">&#xe600;</span>2</li>
+                  <li><span class="icon">&#xe605;</span>2</li>
                   <li><span class="icon">&#xe601;</span>10</li>
                 </ul>
             </div>
@@ -104,7 +104,7 @@
             <div class="media-bd-left">
                 <span>￥128</span>
                 <ul>
-                  <li><span class="icon">&#xe600;</span>2</li>
+                  <li><span class="icon">&#xe605;</span>2</li>
                   <li><span class="icon">&#xe601;</span>10</li>
                 </ul>
             </div>
@@ -121,7 +121,7 @@
             <div class="media-bd-left">
                 <span>￥128</span>
                 <ul>
-                  <li><span class="icon">&#xe600;</span>2</li>
+                  <li><span class="icon">&#xe605;</span>2</li>
                   <li><span class="icon">&#xe601;</span>10</li>
                 </ul>
             </div>
@@ -138,7 +138,7 @@
             <div class="media-bd-left">
                 <span>￥128</span>
                 <ul>
-                  <li><span class="icon">&#xe600;</span>2</li>
+                  <li><span class="icon">&#xe605;</span>2</li>
                   <li><span class="icon">&#xe601;</span>10</li>
                 </ul>
             </div>
@@ -155,7 +155,7 @@
             <div class="media-bd-left">
                 <span>￥128</span>
                 <ul>
-                  <li><span class="icon">&#xe600;</span>2</li>
+                  <li><span class="icon">&#xe605;</span>2</li>
                   <li><span class="icon">&#xe601;</span>10</li>
                 </ul>
             </div>
@@ -172,7 +172,7 @@
             <div class="media-bd-left">
                 <span>￥128</span>
                 <ul>
-                  <li><span class="icon">&#xe600;</span>2</li>
+                  <li><span class="icon">&#xe605;</span>2</li>
                   <li><span class="icon">&#xe601;</span>10</li>
                 </ul>
             </div>

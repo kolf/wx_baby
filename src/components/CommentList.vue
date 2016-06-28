@@ -1,8 +1,8 @@
 <template>
   <div>
-    <x-header style="background-color:#f04848" _:left-options="{showBack: false}">评论<span class="icon header-edit" slot="right">&#xe608;</span></x-header>
-    <ul class="discuss_list">
-      <li class="discuss_item vux-1px-b" v-for="comment in list" href="/home">
+    <x-header style="background-color:#f04848" _:left-options="{showBack: false}">评论<a href="#!/commentAdd" class="icon header-edit" slot="right">&#xe608;</a></x-header>
+    <div class="discuss_list">
+      <a class="discuss_item vux-1px-b" v-for="comment in list" href="#!/commentDateils">
         <div class="discuss_opr">
           <rater :value.sync="comment.like_num" slot="value" :font-size="20" disabled></rater>
         </div>
@@ -23,8 +23,8 @@
             <li><span class="icon icon-yuedu">&#xe606;</span>122</li>
           </ul>
         </p>
-      </li>
-    </ul>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -95,8 +95,9 @@ export default {
 }
 
 .discuss_item {
+  display: block;
   position: relative;
-  padding: 10px 10px 10px 60px ;
+  padding: 10px 15px 10px 60px ;
 }
 
 .discuss_item:after {

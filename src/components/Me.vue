@@ -1,9 +1,56 @@
 <template>
   <div>
-    <x-header style="background-color:#f04848" :left-options="{showBack: false}">首页</x-header>
-    <swiper :list="slide" auto></swiper>
+    <x-header style="background-color:#f04848" _:left-options="{showBack: false}">个人信息</x-header>
+    <group>
+      <div class="weui_panel">
+        <div class="weui_panel_bd">
+          <div class="weui_media_box weui_media_appmsg me-box">
+            <div class="weui_media_hd" style="width:60px;height:60px;">
+              <img class="weui_media_appmsg_thumb" style="border-radius:50%" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
+            </div>
+            <div class="weui_media_bd">
+              <h4 class="weui_media_title">一起赢</h4>
+              <p class="weui_media_desc">可用积分：900</p>
+              <p class="weui_media_desc">已用积分：8900</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+        <div class="weui_panel_bd">
+          <div class="weui_media_box weui_media_small_appmsg">
+            <div class="weui_cells weui_cells_access">
+              <a class="weui_cell" href="javascript:void(0);">
+                <div class="weui_cell_bd weui_cell_primary">
+                  <p>手机号</p>
+                </div>
+                <span class="weui_cell_ft">13006666666</span>
+              </a>
+              <a class="weui_cell" href="javascript:void(0);">
+                <div class="weui_cell_bd weui_cell_primary">
+                  <p>邮箱</p>
+                </div>
+                <span class="weui_cell_ft">13006666666@139.com</span>
+              </a>
+              <a class="weui_cell" href="javascript:void(0);">
+                <div class="weui_cell_bd weui_cell_primary">
+                  <p>宝宝生日</p>
+                </div>
+                <span class="weui_cell_ft">2014-3-12</span>
+              </a>
+              <a class="weui_cell" href="javascript:void(0);">
+                <div class="weui_cell_bd weui_cell_primary">
+                  <p>宝宝性别</p>
+                </div>
+                <span class="weui_cell_ft">小公主</span>
+              </a>
+              </div>
+            </div>
+          </div>
+    </group>
+    <group title="我的订单">
     <div class="weui_panel weui_panel_access">
-      <div class="weui_panel_hd">亲子交流</div>
       <div class="weui_panel_bd">
         <a class="weui_media_box weui_media_appmsg" href="#!/details">
           <div class="weui_media_hd" style="width:80px;height:80px">
@@ -91,71 +138,77 @@
           </div>
         </a>
       </div>
-      <a class="weui_panel_ft" href="#list">查看更多</a> </div>
-  </div>
+    </div>
+  </group></div>
 </template>
 
 <script>
-import {XHeader, Group, Cell, Swiper, Panel} from 'vux-components'
+import {Rater, XHeader, XButton, Flexbox, FlexboxItem, Cell, Group, Switch, Radio, Address, AddressChinaData, XInput, Datetime, PopupPicker,
+Picker} from 'vux-components'
+
+import value2name from 'vux/src/filters/value2name'
 
 export default {
   components: {
+    Rater,
+    XButton,
     XHeader,
-    Group,
+    Flexbox,
+    FlexboxItem,
     Cell,
-    Swiper,
-    Panel
+    Group,
+    Switch,
+    Radio,
+    XInput,
+    Address,
+    Datetime,
+    PopupPicker,
+    Picker
   },
-  data: function () {
+  data () {
     return {
-      slide: [{
-        url: 'http://mp.weixin.qq.com/s?__biz=MzAxNjU0MDYxMg==&ampmid=400385458&ampidx=1&ampsn=78f6b8d99715384bdcc7746596d88359&ampscene=19#wechat_redirect',
-        img: 'http://7xqzw4.com2.z0.glb.qiniucdn.com/1.jpg',
-        title: '如何手制一份秋意的茶？'
-      }, {
-        url: 'http://mp.weixin.qq.com/s?__biz=MzAxNjU0MDYxMg==&ampmid=400160890&ampidx=1&ampsn=29ef02af25793a11a3f6aec92bfb46c1&ampscene=19#wechat_redirect',
-        img: 'http://7xqzw4.com2.z0.glb.qiniucdn.com/2.jpg',
-        title: '茶包VS原叶茶'
-      }, {
-        url: 'http://mp.weixin.qq.com/s?__biz=MzAxNjU0MDYxMg==&ampmid=400094682&ampidx=1&ampsn=8231a2053b772b2108784fccc254d28c&ampscene=19#wechat_redirect',
-        img: 'http://7xqzw4.com2.z0.glb.qiniucdn.com/3.jpg',
-        title: '播下茶籽，明春可发芽？'
-      }],
-      list: [{
-        src: 'http://placeholder.qiniudn.com/100x100/f04848/ffffff',
-        title: '趁着夏天还没有过去，狗狗还可以在户外游',
-        desc: '活动时间：2016-6-1 至 2016-8-30',
-        url: '#'
-      }, {
-        src: 'http://placeholder.qiniudn.com/100x100/f04848/ffffff',
-        title: '标题二',
-        desc: '活动时间：2016-6-1 至 2016-8-30',
-        url: '#'
-      }]
+      title: '所在城市',
+      value: [],
+      list1: [['王子', '公主']],
+      title2: '手动设定',
+      value2: ['广东省', '深圳市', '南山区'],
+      value3: ['海南省', '儋州市', '--'],
+      addressData: AddressChinaData,
+      value4: [],
+      value5: ['广东省', '深圳 市', '南山区']
+    }
+  },
+  methods: {
+    changeData () {
+      this.value2 = ['430000', '430400', '430407']
+    },
+    getName (value) {
+      return value2name(value, AddressChinaData)
+    },
+    submit () {
+      console.log('submit')
     }
   }
 }
 </script>
 
 <style lang="less">
-  @import '~vux/dist/vux.css';
-
-  .media-bd-left{
-
-    >span{
-      color: red;
-      float: left;
-      font-size: 20px;
-    }
-    ul{
-      overflow:hide;
-      float:right;
-    }
-    li{
-      float:left;
-      line-height: 20px;
-      padding-right: 10px;
-      padding-top:6px;
-    }
+.me-box{
+  .weui_media_desc{
+    padding:5px 0;
   }
+}
+.fixed-bottom{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding:15px;
+  background:rgba(255, 255, 255, 0.5);;
+}
+.weui_input{
+  text-align: right;
+  box-sizing: border-box;
+  padding-right: 5px;
+}
 </style>

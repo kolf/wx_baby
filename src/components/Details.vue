@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background-color:#f04848" _:left-options="{showBack: false}">详情<span class="icon header-edit" slot="right">&#xe608;</span></x-header>
+    <x-header style="background-color:#f04848" _:left-options="{showBack: false}">详情<a href="#!/commentAdd" class="icon header-edit" slot="right">&#xe608;</a></x-header>
     <swiper :list="slide" auto></swiper>
     <div class="article">
       <div class="pad">
@@ -14,7 +14,7 @@
           <li>已报人数：10人</li>
           <li>活动地点：大兴区/北京</li>
           <li>活动价格：<span class="text-primary">￥128</span></li>
-          <li>综合评价：<rater :value.sync="data5" slot="value" :font-size="20" disabled></rater> <a class="pull-right">128条评论</a></li>
+          <li>综合评价：<rater :value.sync="data5" slot="value" :font-size="20" disabled></rater> <a href="#!/commentList" class="pull-right">128条评论</a></li>
         </ul>
       </div>
       <div class="pad">
@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="fixed-bottom">
-      <x-button type="warn">立即购买</x-button>
+      <a href="#!/join"><x-button type="warn">立即购买</x-button></a>
     </div>
   </div>
 </template>
@@ -110,7 +110,10 @@ export default {
     right: 0;
     bottom: 0;
     padding:15px;
-    background:rgba(255, 255, 255, 0.5);;
+    background:rgba(255, 255, 255, 0.5);
+    a{
+      display: block;
+    }
   }
 
 </style>
