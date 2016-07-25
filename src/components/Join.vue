@@ -1,17 +1,14 @@
 <template>
   <div>
-    <x-header style="background-color:#f04848" _:left-options="{showBack: false}">用户注册</x-header>
+    <x-header style="background-color:#ee5e81" _:left-options="{showBack: false}">用户注册</x-header>
     <group title="用户注册即代表同意XX协议">
-      <!-- <radio fill-mode fill-label="手机号" fill-placeholder=""></radio>
-      <radio class="vux-1px-t" fill-mode fill-label="验证码" fill-placeholder=""></radio> -->
-      <!-- <address :title="title" :value.sync="value" :list="addressData" placeholder="请选择地址"></address> -->
-      <x-input title="手机号">
-        <x-button slot="right" mini plain v-ref:input>发送验证码</x-button>
+      <x-input title="手机号" placeholder="请填写手机号" :required="true" v-ref:input>
+        <x-button slot="right" mini plain>发送验证码</x-button>
       </x-input>
-      <x-input title="验证码" placeholder="" :required="true" v-ref:input02></x-input>
+      <x-input title="验证码" placeholder="请填写验证码" :required="true" v-ref:input02></x-input>
     </group>
     <div class="pad">
-      <x-button type="warn" v-link="'/information'">下一步</x-button>
+      <x-button type="primary" v-link="'/information'">下一步</x-button>
     </div>
   </div>
 </template>

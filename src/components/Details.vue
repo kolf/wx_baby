@@ -1,22 +1,30 @@
 <template>
   <div>
-    <x-header style="background-color:#f04848" _:left-options="{showBack: false}">详情<a href="#!/commentAdd" class="icon header-edit" slot="right">&#xe608;</a></x-header>
+    <x-header style="background-color:#ee5e81" _:left-options="{showBack: false}">详情<a v-link="'commentAdd'" class="icon header-icon" slot="right">&#xe608;</a></x-header>
     <swiper :list="slide" auto></swiper>
     <div class="article">
-      <div class="pad">
-        趁着夏天还没有过去，狗狗还可以在户外游
-      </div>
-      <div class="article-params pad">
-        <ul>
-          <li>活动时间：2016-6-1 至 2016-8-30</li>
-          <li>活动地点：大兴区/北京</li>
-          <li>活动积分：500积分</li>
-          <li>已报人数：10人</li>
-          <li>活动地点：大兴区/北京</li>
-          <li>活动价格：<span class="text-primary">￥128</span></li>
-          <li>综合评价：<rater :value.sync="data5" slot="value" :font-size="20" disabled></rater> <a href="#!/commentList" class="pull-right">128条评论</a></li>
+      <group style="margin-top:-15px">
+        <div class="pad">
+          趁着夏天还没有过去，狗狗还可以在户外游
+          <div class="text-primary text-lg" style="font-size:24px">￥200</div>
+        </div>
+      </group>
+
+      <group>
+        <ul class="article-params pad">
+          <li><span class="icon">&#xe615;</span>活动时间：2016-6-1 至 2016-8-30</li>
+          <li><span class="icon">&#xe618;</span>活动地点：大兴区/北京</li>
+          <li><span class="icon">&#xe616;</span>活动积分：500积分</li>
+          <li><span class="icon">&#xe601;</span>已报人数：10人</li>
         </ul>
-      </div>
+      </group>
+
+      <group>
+        <cell v-link="'commentList'" title="综合评价">
+          <span>(128条评论)</span><rater :value.sync="data5" slot="value" :font-size="20" disabled></rater>
+        </cell>
+      </group>
+
       <div class="pad">
         <divider>活动特色</divider>
         <img src="http://7xqzw4.com2.z0.glb.qiniucdn.com/1.jpg" alt="">
@@ -36,7 +44,7 @@
       </div>
     </div>
     <div class="fixed-bottom">
-      <a href="#!/join"><x-button type="warn">立即购买</x-button></a>
+      <a v-link="'join'"><x-button type="primary">立即购买</x-button></a>
     </div>
   </div>
 </template>
@@ -92,28 +100,24 @@ export default {
 </script>
 
 <style lang="less">
-  @import '~vux/dist/vux.css';
-
   img{
     max-width: 100%;
   }
 
   .article{
     p{
-      padding-bottom: 10px;
+      /*padding-bottom: 10px;*/
+    }
+    &-params{
+      li{
+        line-height: 1.6
+      }
+      .icon{
+        font-size:16px;
+      }
     }
   }
 
-  .fixed-bottom{
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding:15px;
-    background:rgba(255, 255, 255, 0.5);
-    a{
-      display: block;
-    }
-  }
+
 
 </style>

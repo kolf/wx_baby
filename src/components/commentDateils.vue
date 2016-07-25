@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background-color:#f04848" _:left-options="{showBack: false}">评论详情</x-header>
+    <x-header style="background-color:#ee5e81" _:left-options="{showBack: false}">评论详情</x-header>
     <div class="discuss_list">
       <div class="discuss_item" v-for="comment in list" href="#!/commentDateils">
         <div class="discuss_opr">
@@ -71,9 +71,6 @@ export default {
 </script>
 
 <style lang="less">
-.header-edit{
-  font-size: 24px;
-  color:#fff;
-}
+
 
 </style>

@@ -1,214 +1,134 @@
 <template>
   <div>
-    <x-header style="background-color:#f04848" _:left-options="{showBack: false}">个人信息</x-header>
-    <group>
-      <div class="weui_panel">
-        <div class="weui_panel_bd">
-          <div class="weui_media_box weui_media_appmsg me-box">
-            <div class="weui_media_hd" style="width:60px;height:60px;">
-              <img class="weui_media_appmsg_thumb" style="border-radius:50%" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-            </div>
-            <div class="weui_media_bd">
-              <h4 class="weui_media_title">一起赢</h4>
-              <p class="weui_media_desc">可用积分：900</p>
-              <p class="weui_media_desc">已用积分：8900</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-        <div class="weui_panel_bd">
-          <div class="weui_media_box weui_media_small_appmsg">
-            <div class="weui_cells weui_cells_access">
-              <a class="weui_cell" href="javascript:void(0);">
-                <div class="weui_cell_bd weui_cell_primary">
-                  <p>手机号</p>
-                </div>
-                <span class="weui_cell_ft">13006666666</span>
-              </a>
-              <a class="weui_cell" href="javascript:void(0);">
-                <div class="weui_cell_bd weui_cell_primary">
-                  <p>邮箱</p>
-                </div>
-                <span class="weui_cell_ft">13006666666@139.com</span>
-              </a>
-              <a class="weui_cell" href="javascript:void(0);">
-                <div class="weui_cell_bd weui_cell_primary">
-                  <p>宝宝生日</p>
-                </div>
-                <span class="weui_cell_ft">2014-3-12</span>
-              </a>
-              <a class="weui_cell" href="javascript:void(0);">
-                <div class="weui_cell_bd weui_cell_primary">
-                  <p>宝宝性别</p>
-                </div>
-                <span class="weui_cell_ft">小公主</span>
-              </a>
-              </div>
-            </div>
-          </div>
-    </group>
-    <group title="我的订单">
-    <div class="weui_panel weui_panel_access">
-      <div class="weui_panel_bd">
-        <a class="weui_media_box weui_media_appmsg" href="#!/details">
-          <div class="weui_media_hd" style="width:80px;height:80px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe605;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
-            </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" href="#!/details">
-          <div class="weui_media_hd" style="width:80px;height:80px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe605;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
-            </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" href="#!/details">
-          <div class="weui_media_hd" style="width:80px;height:80px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe605;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
-            </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" href="#!/details">
-          <div class="weui_media_hd" style="width:80px;height:80px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe605;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
-            </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" href="#!/details">
-          <div class="weui_media_hd" style="width:80px;height:80px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe605;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
-            </div>
-          </div>
-        </a>
-      </div>
+    <x-header style="background-color:#ee5e81" _:left-options="{showBack: false}">个人信息</x-header>
+    <div class="weui_cells_title  text-right">
+      <span class="icon text-primary">&#xe605;</span>积分：300/8900
     </div>
-  </group></div>
+    <div class="avater">
+      <span :style="{backgroundImage: 'url('+user.avatar+')'}"></span>
+      <p>{{user.name}}</p>
+
+    </div>
+
+    <group>
+      <cell title="手机号" @click="showPhone=true" link="javascript:;" :value="user.phone">
+        <span class="icon" slot="icon">&#xe60b;</span>
+      </cell>
+      <cell title="邮箱" @click="showEmail=true" link="javascript:;" :value="user.email">
+        <span class="icon" slot="icon">&#xe60e;</span>
+      </cell>
+      <address title="所在城市" icon="&#xe610;" :value.sync="user.address" raw-value :list="addressData" hide-district>
+      </address>
+    </group>
+
+    <group>
+      <cell title="宝宝生日" value="2014-3-12">
+        <span class="icon" slot="icon">&#xe60c;</span>
+      </cell>
+      <cell title="宝宝性别" value="小公主">
+        <span class="icon" slot="icon">&#xe60d;</span>
+      </cell>
+    </group>
+
+    <group>
+      <cell title="我的订单" link="order">
+        <span class="icon" slot="icon">&#xe60f;</span>
+      </cell>
+    </group>
+
+    <confirm :show.sync="showPhone" title="手机号" cancelText="取消" confirmText="确定" @on-cancel="onCancel" @on-confirm="onConfirm">
+      <p style="text-align:center;">修改手机号需要向新的手机进行验证</p>
+      <input type="tel" class="modal-input" v-model="user.newPhone" placeholder="请输入新的手机号">
+      <x-input placeholder="请输入验证码" class="weui_vcode modal-verify">
+        <x-button slot="right" mini plain>发送验证码</x-button>
+      </x-input>
+    </confirm>
+
+    <confirm :show.sync="showEmail" title="邮箱" cancelText="取消" confirmText="确定" @on-cancel="onCancel" @on-confirm="onConfirm">
+      <p style="text-align:center;">请输入修改后的邮箱</p>
+      <input type="tel" class="modal-input" v-model="user.email">
+    </confirm>
+</div>
 </template>
 
 <script>
-import {Rater, XHeader, XButton, Flexbox, FlexboxItem, Cell, Group, Switch, Radio, Address, AddressChinaData, XInput, Datetime, PopupPicker,
-Picker} from 'vux-components'
+import {XHeader, XInput, Cell, Group, XButton, Confirm, Address, AddressChinaData} from 'vux-components'
 
 import value2name from 'vux/src/filters/value2name'
 
 export default {
   components: {
-    Rater,
-    XButton,
     XHeader,
-    Flexbox,
-    FlexboxItem,
     Cell,
     Group,
-    Switch,
-    Radio,
-    XInput,
+    Confirm,
     Address,
-    Datetime,
-    PopupPicker,
-    Picker
+    AddressChinaData,
+    XInput,
+    XButton
   },
   data () {
     return {
-      title: '所在城市',
-      value: [],
-      list1: [['王子', '公主']],
-      title2: '手动设定',
-      value2: ['广东省', '深圳市', '南山区'],
-      value3: ['海南省', '儋州市', '--'],
+      user: {
+        avatar: 'http://pic.58pic.com/58pic/14/00/69/66858PICNfJ_1024.jpg',
+        name: 'Kolf',
+        phone: '18611440251',
+        email: '13006666666@139.com',
+        address: ['北京市', '北京市市辖区']
+      },
       addressData: AddressChinaData,
-      value4: [],
-      value5: ['广东省', '深圳 市', '南山区']
+      showVerify: false,
+      showPhone: false,
+      showEmail: false,
+      showCity: false
     }
   },
   methods: {
-    changeData () {
-      this.value2 = ['430000', '430400', '430407']
-    },
     getName (value) {
       return value2name(value, AddressChinaData)
-    },
-    submit () {
-      console.log('submit')
     }
   }
 }
 </script>
 
 <style lang="less">
-.me-box{
-  .weui_media_desc{
+.avater{
+  padding:35px 0 15px;
+  text-align:center;
+  font-size:0;
+  &>span{
+    display:inline-block;
+    border-radius:50%;
+    width:80px;
+    height: 0;
+    padding-top:80px;
+    background:#ccc;
+    background-size:cover;
+  }
+  p{
+    font-size: 16px;
     padding:5px 0;
   }
 }
-.fixed-bottom{
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding:15px;
-  background:rgba(255, 255, 255, 0.5);;
+.modal-verify{
+  padding:6px;
+  background:#eee;
+  margin-top:10px;
+  &:before{
+    border:none;
+  }
 }
-.weui_input{
-  text-align: right;
+.modal-input{
+  background:#eee;
+  border:none;
+  width: 100%;
+  padding:10px;
   box-sizing: border-box;
-  padding-right: 5px;
+  margin-top:10px;
+  font-size: 15px
+}
+.weui_cell_hd .icon{
+  color:#999;
+  font-size:20px;
 }
 </style>

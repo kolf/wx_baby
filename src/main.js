@@ -13,6 +13,11 @@ import Paying from './components/Paying'
 import Join from './components/Join'
 import Information from './components/Information'
 import Me from './components/Me'
+import Order from './components/Order'
+import Orderdetail from './components/Orderdetail'
+import PaySuccess from './components/PaySuccess'
+import PayError from './components/PayError'
+import Locations from './components/Locations'
 
 const FastClick = require('fastclick')
 FastClick.attach(document.body)
@@ -21,7 +26,10 @@ Vue.use(Faker, {locale: 'zh_CN'})
 Vue.use(Router)
 Vue.config.devtools = true
 
-const router = new Router()
+const router = new Router({
+  history: true,
+  saveScrollPosition: true
+})
 
 router.map({
   '/': {
@@ -53,6 +61,21 @@ router.map({
   },
   '/me': {
     component: Me
+  },
+  '/order': {
+    component: Order
+  },
+  '/orderdetail': {
+    component: Orderdetail
+  },
+  '/paySuccess': {
+    component: PaySuccess
+  },
+  '/payError': {
+    component: PayError
+  },
+  '/locations': {
+    component: Locations
   }
 })
 
