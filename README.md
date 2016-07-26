@@ -1,27 +1,37 @@
 # app1
 
-> A Vue.js project
+> 一个基于vue.js开发的亲子生活服务平台
 
-## Build Setup
+## 技术栈
+- vuejs
+- es6
+- vux
+- webpack
+- 微信js-sdk
+- weui
+
+## 开发工具
+- atom
+- 微信开发者工具
+- 微信公众号开发平台
+- github
+- photoshop
+- chrome
+- puer
+- vue-devtools
+- vue-cli
+- nodejs
+
+## 命令
 
 ``` bash
-# install dependencies
+# 安装
 npm install
 
-# serve with hot reload at localhost:8080
+# 开发
 npm run dev
 
-# build for production with minification
+# 发布
 npm run build
 
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
