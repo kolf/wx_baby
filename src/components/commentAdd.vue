@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background-color:#ee5e81" _:left-options="{showBack: false}">发表评论<a class="icon header-icon" slot="right">&#xe609;</a></x-header>
+    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">发表评论<a class="icon header-icon" slot="right">&#xe609;</a></x-header>
     <cell title="总体印象" style="overflow-x:hidden">
       <rater :value.sync="data3" slot="value"></rater>
     </cell>

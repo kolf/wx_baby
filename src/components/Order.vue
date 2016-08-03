@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background-color:#ee5e81" _:left-options="{showBack: false}">我的订单</x-header>
+    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">我的订单</x-header>
     <sticky>
     <tab :animate="false">
       <tab-item active-class="active-1" :selected="demo1 === '全部'" @click="demo1 = '全部'">全部</tab-item>

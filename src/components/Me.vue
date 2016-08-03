@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background-color:#ee5e81" _:left-options="{showBack: false}">个人信息</x-header>
+    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">个人信息</x-header>
     <div class="weui_cells_title  text-right">
       <span class="icon text-primary">&#xe605;</span>积分：300/8900
     </div>
@@ -40,7 +40,7 @@
       <p style="text-align:center;">修改手机号需要向新的手机进行验证</p>
       <input type="tel" class="modal-input" v-model="user.newPhone" placeholder="请输入新的手机号">
       <x-input placeholder="请输入验证码" class="weui_vcode modal-verify">
-        <x-button slot="right" mini plain>发送验证码</x-button>
+        <x-button slot="right" mini plain @click="send()">发送验证码</x-button>
       </x-input>
     </confirm>
 
@@ -80,12 +80,16 @@ export default {
       showVerify: false,
       showPhone: false,
       showEmail: false,
-      showCity: false
+      showCity: false,
+      downTime: 60
     }
   },
   methods: {
     getName (value) {
       return value2name(value, AddressChinaData)
+    },
+    send () {
+
     }
   }
 }
@@ -125,7 +129,8 @@ export default {
   padding:10px;
   box-sizing: border-box;
   margin-top:10px;
-  font-size: 15px
+  font-size: 15px;
+  outline: none;
 }
 .weui_cell_hd .icon{
   color:#999;

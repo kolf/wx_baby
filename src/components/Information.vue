@@ -1,9 +1,9 @@
 <template>
   <div>
-    <x-header style="background-color:#ee5e81" _:left-options="{showBack: false}">用户注册</x-header>
+    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">用户注册</x-header>
     <group title="用户信息">
-      <x-input title="用户昵称" class="input-right" placeholder="请输入2-10位的汉字或字母" :required="true" v-ref:input_1></x-input>
-      <x-input title="常用邮箱" class="input-right" placeholder="请输入你的邮箱" :required="true" v-ref:input_2></x-input>
+      <x-input title="用户昵称" class="input-right" placeholder="请输入2-10位的汉字或字母" :requi#ff9d00="true" v-ref:input_1></x-input>
+      <x-input title="常用邮箱" class="input-right" placeholder="请输入你的邮箱" :requi#ff9d00="true" v-ref:input_2></x-input>
       <address title="所在城市" :value.sync="value" :list="addressData" raw-value hide-district placeholder="请选择地址"></address>
     </group>
     <group title="宝宝信息">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background-color:#ee5e81" _:left-options="{showBack: false}">评论<a href="" v-link="'commentAdd'" class="icon header-edit" slot="right">&#xe608;</a></x-header>
+    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">评论<a href="" v-link="'commentAdd'" class="icon header-edit" slot="right">&#xe608;</a></x-header>
     <div class="discuss_list">
       <div class="discuss_item vux-1px-b" v-for="comment in list" id="comment_{{comment.id}}">
         <div class="discuss_opr">

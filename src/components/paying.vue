@@ -1,6 +1,6 @@
 <template>
   <div style="padding-bottom:60px">
-    <x-header style="background-color:#ee5e81" _:left-options="{showBack: false}">立即购买</x-header>
+    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">立即购买</x-header>
 
      <div class="weui_media_box weui_media_appmsg" style='background:#fff;overflow:hidden'>
          <div class="weui_media_hd">
@@ -94,7 +94,7 @@ export default {
   padding: 0 !important;
   height: 46px;
   line-height: 46px;
-  border-top:2px solid #ee5e81;
+  border-top:2px solid #ff9d00;
   p{
     width:180px;
     padding:0 15px;
@@ -105,7 +105,7 @@ export default {
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    background:#ee5e81;
+    background:#ff9d00;
 
     color:#fff;
     text-align: center;
@@ -127,6 +127,6 @@ export default {
 .weui_cell_bd_center{
   float: right;
   padding-right: 15px;
-  color:red;
+  color:#ff9d00;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <x-header style="background-color:#ee5e81" _:left-options="{showBack: false}">支付结果</x-header> -->
+    <!-- <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">支付结果</x-header> -->
     <div class="msg">
     <div class="weui_msg">
         <div class="weui_icon_area"><i class="weui_icon_success weui_icon_msg"></i></div>

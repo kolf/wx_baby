@@ -7,6 +7,15 @@
 </template>
 
 <script>
+import {} from 'vux-components'
+import store from './vuex/store'
+
+export default {
+  components: {
+
+  },
+  store
+}
 </script>
 
 <style lang="less">
@@ -14,11 +23,11 @@
 body {
   font-family: Helvetica, sans-serif;
   background-color: #fbf9fe;
-  padding-bottom:50px;
+  // padding-bottom:50px;
   overflow-x: hidden;
 }
 a{
-  color:#f04848
+  color:#ff9d00
 }
 .v-transition{
   width:100%;
@@ -36,6 +45,7 @@ a{
       z-index: 110;
     }
   }
+
 }
 
 li{
@@ -70,6 +80,9 @@ li{
   &-top{
     padding-top:15px;
   }
+  &-bottom{
+    padding-bottom: 15px;
+  }
   &-left{
     padding-left:15px;
   }
@@ -85,13 +98,16 @@ li{
 }
 .text{
   &-primary{
-    color:red
+    color:#ff9d00
   }
   &-lg{
     font-size: 18px;
   }
   &-right{
     text-align:right;
+  }
+  &-center{
+    text-align:center
   }
 }
 
