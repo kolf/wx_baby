@@ -12,16 +12,13 @@
   },
   "dependencies": {
     "babel-runtime": "^6.0.0",
-    "eslint-config-airbnb": "^9.0.1",
     "fastclick": "^1.0.6",
     "vue": "^1.0.21",
-    "vue-infinite-loading": "^0.3.1",
     "vue-infinite-scroll": "^0.2.3",
     "vue-resource": "^0.9.3",
     "vue-router": "^0.7.13",
     "vuex": "^1.0.0-rc.2",
-    "vux": "^0.1.1",
-    "whatwg-fetch": "^1.0.0"
+    "vux": "^0.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

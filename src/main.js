@@ -5,15 +5,12 @@ import VueResource from 'vue-resource'
 import configRouter from './routers'
 import infiniteScroll from 'vue-infinite-scroll'
 Vue.use(infiniteScroll)
-import Faker from 'vue-faker'
 
 import filters from './filters'
 Object.keys(filters).forEach((k) => Vue.filter(k, filters[k]))
 
 const FastClick = require('fastclick')
 FastClick.attach(document.body)
-
-Vue.use(Faker, {locale: 'zh_CN'})
 
 Vue.use(VueResource)
 Vue.http.options.emulateJSON = true
@@ -27,4 +24,4 @@ const router = new Router({
 })
 configRouter(router)
 
-router.start(App, 'app')
+router.start(App, '#app')

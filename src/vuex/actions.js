@@ -1,6 +1,6 @@
 import * as types from './mutation-types'
 
-const API_ROOT = 'http://192.168.2.102:3000/'
+const API_ROOT = 'http://localhost:3000/'
 
 // 获取活动列表
 export const getContentList = function ({ dispatch }, data) {

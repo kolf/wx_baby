@@ -22,7 +22,7 @@ export default {
 
 body {
   font-family: Helvetica, sans-serif;
-  background-color: #fbf9fe;
+  background-color: #f6f6f6;
   // padding-bottom:50px;
   overflow-x: hidden;
 }

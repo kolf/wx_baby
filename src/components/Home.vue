@@ -3,7 +3,7 @@
     <x-header style="background-color:#ff9d00" :left-options="{showBack: false}"><div v-link="'locations'" class="header-left" name="left">北京<a class="icon">&#xe614;</a></div>首页<a v-link="'me'" class="icon header-icon" slot="right">&#xe612;</a></x-header>
     <swiper :list="projectColumnList" auto height="240px"></swiper>
 
-    <flexbox class="vux-1px-tb text-primary" :gutter="1" >
+    <flexbox class="text-primary" :gutter="1" >
       <flexbox-item class="vux-1px-r">
         <div class="classify-item">
           <h4>亲子交流</h4>
@@ -20,181 +20,45 @@
     <div class="weui_panel weui_panel_access">
       <div class="weui_panel_hd">亲子交流</div>
       <div class="weui_panel_bd">
-        <a class="weui_media_box weui_media_appmsg" v-link="'details'">
-          <div class="weui_media_hd" style="width:100px;height:100px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe616;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
+        <div class="weui_media_box weui_media_appmsg" v-for="(index, item) in projectList | orderBy projectListRanking" v-link="item.picUri">
+            <div class="weui_media_hd" style="width:100px;height:100px">
+                <span class="weui_media_appmsg_thumb" alt="" :src="item.picUrl" :style="{'background-image': 'url('+item.picUrl+')'}"></span>
             </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" v-link="'details'">
-          <div class="weui_media_hd" style="width:100px;height:100px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe616;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
+            <div class="weui_media_bd">
+                <h4 class="weui_media_title">{{item.playName}}</h4>
+                <p class="weui_media_desc">活动时间：{{item.projectStartTime | formatTime}} 至 {{item.projectStartTime | formatTime}}</p>
+                <p class="weui_media_desc">活动地点：{{item.activePlace}}</p>
+                <div class="media-bd-left">
+                    <span>￥{{item.projectCost}}</span>
+                    <ul>
+                        <li><span class="icon">&#xe616;</span>{{item.projectCost}}</li>
+                        <li><span class="icon">&#xe601;</span>{{item.signCount}}</li>
+                    </ul>
+                </div>
             </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" v-link="'details'">
-          <div class="weui_media_hd" style="width:100px;height:100px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe616;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
-            </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" v-link="'details'">
-          <div class="weui_media_hd" style="width:100px;height:100px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe616;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
-            </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" v-link="'details'">
-          <div class="weui_media_hd" style="width:100px;height:100px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe616;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
-            </div>
-          </div>
-        </a>
+        </div>
       </div>
       <a class="weui_panel_ft text-center" v-link="'list'">查看更多</a> </div>
     <div class="weui_panel weui_panel_access">
       <div class="weui_panel_hd">亲子出游</div>
       <div class="weui_panel_bd">
-        <a class="weui_media_box weui_media_appmsg" v-link="'details'">
-          <div class="weui_media_hd" style="width:100px;height:100px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe616;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
+        <div class="weui_media_box weui_media_appmsg" v-for="(index, item) in projectList | orderBy projectListRanking" v-link="item.picUri">
+            <div class="weui_media_hd" style="width:100px;height:100px">
+                <span class="weui_media_appmsg_thumb" alt="" :src="item.picUrl" :style="{'background-image': 'url('+item.picUrl+')'}"></span>
             </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" v-link="'details'">
-          <div class="weui_media_hd" style="width:100px;height:100px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe616;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
+            <div class="weui_media_bd">
+                <h4 class="weui_media_title">{{item.playName}}</h4>
+                <p class="weui_media_desc">活动时间：{{item.projectStartTime | formatTime}} 至 {{item.projectStartTime | formatTime}}</p>
+                <p class="weui_media_desc">活动地点：{{item.activePlace}}</p>
+                <div class="media-bd-left">
+                    <span>￥{{item.projectCost}}</span>
+                    <ul>
+                        <li><span class="icon">&#xe616;</span>{{item.projectCost}}</li>
+                        <li><span class="icon">&#xe601;</span>{{item.signCount}}</li>
+                    </ul>
+                </div>
             </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" v-link="'details'">
-          <div class="weui_media_hd" style="width:100px;height:100px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe616;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
-            </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" v-link="'details'">
-          <div class="weui_media_hd" style="width:100px;height:100px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe616;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
-            </div>
-          </div>
-        </a>
-        <a class="weui_media_box weui_media_appmsg" v-link="'details'">
-          <div class="weui_media_hd" style="width:100px;height:100px">
-            <img class="weui_media_appmsg_thumb" alt="" src="http://placeholder.qiniudn.com/80x80/f04848/ffffff">
-          </div>
-          <div class="weui_media_bd">
-            <h4 class="weui_media_title">趁着夏天还没有过去，狗狗还可以在户外游</h4>
-            <p class="weui_media_desc">活动时间：2016-6-1 至 2016-8-30</p>
-            <p class="weui_media_desc">活动地点：大兴区/北京</p>
-            <div class="media-bd-left">
-                <span>￥128</span>
-                <ul>
-                  <li><span class="icon">&#xe616;</span>2</li>
-                  <li><span class="icon">&#xe601;</span>10</li>
-                </ul>
-            </div>
-          </div>
-        </a>
+        </div>
       </div>
       <a class="weui_panel_ft text-center" v-link="'list'">查看更多</a> </div>
   </div>
@@ -202,8 +66,8 @@
 
 <script>
 import {XHeader, Group, Cell, Swiper, Divider, Flexbox, FlexboxItem} from 'vux-components'
-import {projectColumnList} from '../vuex/getters'
-import {getProjectColumnList} from '../vuex/actions'
+import {projectColumnList, contentList} from '../vuex/getters'
+import {getProjectColumnList, getContentList} from '../vuex/actions'
 
 export default {
   components: {
@@ -217,14 +81,19 @@ export default {
   },
   vuex: {
     getters: {
-      projectColumnList: projectColumnList
+      projectColumnList: projectColumnList,
+      projectList: contentList
     },
     actions: {
-      getProjectColumnList: getProjectColumnList
+      getProjectColumnList: getProjectColumnList,
+      getProjectList: getContentList
     }
   },
   created () {
     this.getProjectColumnList()
+    this.getProjectList({
+      pageIndex: 0
+    })
   },
   data: function () {
     return {

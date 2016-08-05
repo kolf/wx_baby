@@ -2,10 +2,10 @@
   <div>
     <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">用户注册</x-header>
     <group title="用户注册即代表同意XX协议">
-      <x-input title="手机号" placeholder="请填写手机号" :requi#ff9d00="true" v-ref:input>
+      <x-input title="手机号" placeholder="请填写手机号" :require="true" v-ref:input>
         <x-button slot="right" mini plain>发送验证码</x-button>
       </x-input>
-      <x-input title="验证码" placeholder="请填写验证码" :requi#ff9d00="true" v-ref:input02></x-input>
+      <x-input title="验证码" placeholder="请填写验证码" :require="true" v-ref:input02></x-input>
     </group>
     <div class="pad">
       <x-button type="primary" v-link="'/information'">下一步</x-button>
@@ -57,7 +57,7 @@ export default {
   right: 0;
   bottom: 0;
   padding:15px;
-  background:rgba(255, 255, 255, 0.5);
+  background:rgba(255, 255, 255, 1);
 
   &-wrap{
     padding-bottom: 80px;

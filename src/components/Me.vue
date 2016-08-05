@@ -36,7 +36,7 @@
       </cell>
     </group>
 
-    <confirm :show.sync="showPhone" title="手机号" cancelText="取消" confirmText="确定" @on-cancel="onCancel" @on-confirm="onConfirm">
+    <confirm :show.sync="showPhone" title="手机号" @on-cancel="onCancel" @on-confirm="onConfirm">
       <p style="text-align:center;">修改手机号需要向新的手机进行验证</p>
       <input type="tel" class="modal-input" v-model="user.newPhone" placeholder="请输入新的手机号">
       <x-input placeholder="请输入验证码" class="weui_vcode modal-verify">
@@ -44,7 +44,7 @@
       </x-input>
     </confirm>
 
-    <confirm :show.sync="showEmail" title="邮箱" cancelText="取消" confirmText="确定" @on-cancel="onCancel" @on-confirm="onConfirm">
+    <confirm :show.sync="showEmail" title="邮箱" @on-cancel="onCancel" @on-confirm="onConfirm">
       <p style="text-align:center;">请输入修改后的邮箱</p>
       <input type="tel" class="modal-input" v-model="user.email">
     </confirm>
@@ -88,8 +88,11 @@ export default {
     getName (value) {
       return value2name(value, AddressChinaData)
     },
-    send () {
-
+    onCancel () {
+      console.log('cancal')
+    },
+    onConfirm () {
+      console.log('onConfirm')
     }
   }
 }
@@ -133,7 +136,7 @@ export default {
   outline: none;
 }
 .weui_cell_hd .icon{
-  color:#999;
+  color:#ff9d00;
   font-size:20px;
 }
 </style>

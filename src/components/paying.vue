@@ -122,7 +122,7 @@ export default {
   margin: 4px 4px 10px 0;
 }
 .checker-item-selected {
-  border-color: #ff4a00;
+  border-color: #ff9d00;
 }
 .weui_cell_bd_center{
   float: right;

@@ -43,7 +43,7 @@
         </p>
       </div>
     </div>
-    <div class="fixed-bottom">
+    <div class="fixed-bottom vux-1px-t">
       <a v-link="'join'"><x-button type="primary">立即购买</x-button></a>
     </div>
   </div>

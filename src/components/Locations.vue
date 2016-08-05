@@ -1,7 +1,7 @@
 <template>
   <div>
     <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">选择城市</x-header>
-    <search @result-click="resultClick" class="kll" cancelText="zz" @on-change="getResult" :results="results" :value.sync="value"></search>
+    <search @result-click="resultClick" class="kll" @on-change="getResult" :results="results" :value.sync="value"></search>
     <div class="weui_cells_title">定位城市</div>
     <!-- <div class="pad bg-white vux-1px-tb">定位中...</div> -->
     <div class="location-box bg-white vux-1px-t">
