@@ -6,6 +6,8 @@ import configRouter from './routers'
 import infiniteScroll from 'vue-infinite-scroll'
 Vue.use(infiniteScroll)
 
+Vue.config.devtools = true
+
 import filters from './filters'
 Object.keys(filters).forEach((k) => Vue.filter(k, filters[k]))
 
@@ -16,8 +18,6 @@ Vue.use(VueResource)
 Vue.http.options.emulateJSON = true
 
 Vue.use(Router)
-Vue.config.devtools = true
-
 const router = new Router({
   history: true,
   hashbang: false

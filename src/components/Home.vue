@@ -5,22 +5,23 @@
 
     <flexbox class="text-primary" :gutter="1" >
       <flexbox-item class="vux-1px-r">
-        <div class="classify-item">
+        <div class="classify-item" v-link="{name: 'list', params: {classify: 'interact'}}">
           <h4>亲子交流</h4>
         <p>大小兼顾</p>
         </div>
       </flexbox-item>
       <flexbox-item>
-        <div class="classify-item trips">
+        <div class="classify-item trips" v-link="{name: 'list', params: {classify: 'trip'}}">
           <h4>亲子出游</h4>
           <p>精彩出行</p>
         </div>
       </flexbox-item>
     </flexbox>
-    <div class="weui_panel weui_panel_access">
+    <x-loader :show="!loader"></x-loader>
+    <div class="weui_panel weui_panel_access" v-if="loader">
       <div class="weui_panel_hd">亲子交流</div>
       <div class="weui_panel_bd">
-        <div class="weui_media_box weui_media_appmsg" v-for="(index, item) in projectList | orderBy projectListRanking" v-link="item.picUri">
+        <div class="weui_media_box weui_media_appmsg" v-for="(index, item) in projectTripList | orderBy projectListRanking" v-link="item.picUri">
             <div class="weui_media_hd" style="width:100px;height:100px">
                 <span class="weui_media_appmsg_thumb" alt="" :src="item.picUrl" :style="{'background-image': 'url('+item.picUrl+')'}"></span>
             </div>
@@ -28,21 +29,16 @@
                 <h4 class="weui_media_title">{{item.playName}}</h4>
                 <p class="weui_media_desc">活动时间：{{item.projectStartTime | formatTime}} 至 {{item.projectStartTime | formatTime}}</p>
                 <p class="weui_media_desc">活动地点：{{item.activePlace}}</p>
-                <div class="media-bd-left">
-                    <span>￥{{item.projectCost}}</span>
-                    <ul>
-                        <li><span class="icon">&#xe616;</span>{{item.projectCost}}</li>
-                        <li><span class="icon">&#xe601;</span>{{item.signCount}}</li>
-                    </ul>
-                </div>
+
             </div>
         </div>
       </div>
-      <a class="weui_panel_ft text-center" v-link="'list'">查看更多</a> </div>
-    <div class="weui_panel weui_panel_access">
+      <a class="weui_panel_ft text-center" v-link="{name: 'list', params: {classify: 'interact'}}">查看更多</a>
+    </div>
+    <div class="weui_panel weui_panel_access" v-if="loader">
       <div class="weui_panel_hd">亲子出游</div>
       <div class="weui_panel_bd">
-        <div class="weui_media_box weui_media_appmsg" v-for="(index, item) in projectList | orderBy projectListRanking" v-link="item.picUri">
+        <div class="weui_media_box weui_media_appmsg" v-for="(index, item) in projectInteractList | orderBy projectListRanking" v-link="item.picUri">
             <div class="weui_media_hd" style="width:100px;height:100px">
                 <span class="weui_media_appmsg_thumb" alt="" :src="item.picUrl" :style="{'background-image': 'url('+item.picUrl+')'}"></span>
             </div>
@@ -59,15 +55,17 @@
                 </div>
             </div>
         </div>
+
       </div>
-      <a class="weui_panel_ft text-center" v-link="'list'">查看更多</a> </div>
+      <a class="weui_panel_ft text-center" v-link="{name: 'list', params: {classify: 'trip'}}">查看更多</a> </div>
   </div>
 </template>
 
 <script>
 import {XHeader, Group, Cell, Swiper, Divider, Flexbox, FlexboxItem} from 'vux-components'
-import {projectColumnList, contentList} from '../vuex/getters'
-import {getProjectColumnList, getContentList} from '../vuex/actions'
+import {projectColumnList, projectTripList, projectInteractList, homeLoader} from '../vuex/getters'
+import {getProjectColumnList, getProjectTripList, getProjectInteractList} from '../vuex/actions'
+import XLoader from './Loader'
 
 export default {
   components: {
@@ -77,27 +75,30 @@ export default {
     Swiper,
     Divider,
     Flexbox,
-    FlexboxItem
+    FlexboxItem,
+    XLoader
   },
   vuex: {
     getters: {
       projectColumnList: projectColumnList,
-      projectList: contentList
+      projectTripList: projectTripList,
+      projectInteractList: projectInteractList,
+      loader: homeLoader
     },
     actions: {
       getProjectColumnList: getProjectColumnList,
-      getProjectList: getContentList
+      getProjectTripList: getProjectTripList,
+      getProjectInteractList: getProjectInteractList
     }
   },
   created () {
     this.getProjectColumnList()
-    this.getProjectList({
-      pageIndex: 0
-    })
+    this.getProjectTripList()
+    this.getProjectInteractList()
   },
   data: function () {
     return {
-
+      loader1: true
     }
   }
 }

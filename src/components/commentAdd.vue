@@ -1,51 +1,56 @@
 <template>
   <div>
-    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">发表评论<a class="icon header-icon" slot="right">&#xe609;</a></x-header>
+    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">发表评论<a @click="addComment()" class="icon header-icon" slot="right">&#xe609;</a></x-header>
     <cell title="总体印象" style="overflow-x:hidden">
-      <rater :value.sync="data3" slot="value"></rater>
+      <rater :value.sync="point" slot="value"></rater>
     </cell>
     <div class="edit-box">
-      <x-textarea :max="1000" placeholder="说些什么吧! 最多可以输入1000个字符哦..." style="padding:0"></x-textarea>
-      <!-- <textarea name="text" placeholder='说些什么吧...' rows="8" cols="40"></textarea> -->
+      <x-textarea :max="1000" :value.sync="comment" placeholder="说些什么吧! 最多可以输入1000个字符哦..." style="padding:0"></x-textarea>
     </div>
     <ul class="upload-list pad">
       <li class="upload-btn"><span class="icon">&#xe611</span></li>
     </ul>
-
-    <!-- <div class="pad">
-      <x-button type="warn">发表评论</x-button>
-    </div> -->
-
   </div>
 </template>
 
 <script>
-import {Rater, XHeader, XButton, Flexbox, FlexboxItem, Cell, Group, XTextarea} from 'vux-components'
+import {Rater, XHeader, Cell, Group, XTextarea} from 'vux-components'
+import {setDiscussion} from '../vuex/actions'
 
 export default {
   components: {
     Rater,
-    XButton,
     XHeader,
-    Flexbox,
-    FlexboxItem,
     Cell,
     Group,
     XTextarea
   },
+  vuex: {
+    getters: {
+
+    },
+    actions: {
+      setDiscussion: setDiscussion
+    }
+  },
   data () {
     return {
-      list: [],
-      isShowFace: false
+      imagePaths: [],
+      comment: '',
+      point: 5
     }
   },
   methods: {
-    showFace () {
-      console.log(1)
+    addComment () {
+      let _this = this
+      setDiscussion({
+        projectId: _this.projectId,
+        userId: _this.userId,
+        point: _this.point,
+        comment: _this.comment,
+        imagePaths: _this.imagePaths
+      })
     }
-  },
-  ready () {
-    console.log(1)
   }
 }
 </script>

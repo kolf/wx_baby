@@ -1,78 +1,62 @@
-import Details from './components/Details'
-import Home from './components/Home'
-import List from './components/List'
-import CommentList from './components/CommentList'
-import CommentDateils from './components/CommentDateils'
-import CommentAdd from './components/CommentAdd'
-import Paying from './components/Paying'
-import Join from './components/Join'
-import Information from './components/Information'
-import Me from './components/Me'
-import Order from './components/Order'
-import Orderdetail from './components/Orderdetail'
-import PaySuccess from './components/PaySuccess'
-import PayError from './components/PayError'
-import Locations from './components/Locations'
-
 export default (router) => router.map({
   '/': {
     name: 'index',
-    component: Home
+    component: require('./components/Home')
   },
   '/details': {
     name: 'details',
-    component: Details
+    component: require('./components/Details')
   },
-  '/list': {
+  ':classify': {
     name: 'list',
-    component: List
+    component: require('./components/List')
   },
-  '/commentList': {
-    name: 'commentList',
-    component: CommentList
+  '/comment/:projectId': {
+    name: 'comment',
+    component: require('./components/CommentList')
   },
   '/commentDateils': {
     name: 'commentDateils',
-    component: CommentDateils
+    component: require('./components/CommentDateils')
   },
-  '/commentAdd': {
+  '/commentAdd/:projectId': {
     name: 'commentAdd',
-    component: CommentAdd
+    component: require('./components/CommentAdd')
   },
   '/paying': {
     name: 'paying',
-    component: Paying
+    component: require('./components/Paying')
   },
   '/join': {
-    name: 'paying',
-    component: Join
+    name: 'join',
+    component: require('./components/Join')
   },
   '/information': {
     name: 'information',
-    component: Information
+    component: require('./components/Information')
   },
   '/me': {
     name: 'me',
-    component: Me
+    component: require('./components/Me')
   },
   '/order': {
     name: 'order',
-    component: Order
+    component: require('./components/Order')
   },
   '/orderdetail': {
     name: 'orderdetail',
-    component: Orderdetail
+    component: require('./components/Orderdetail')
   },
   '/paySuccess': {
     name: 'paySuccess',
-    component: PaySuccess
+    component: require('./components/PaySuccess')
   },
   '/payError': {
     name: 'payError',
-    component: PayError
+    component: require('./components/PayError')
   },
   '/locations': {
     name: 'locations',
-    component: Locations
+    component: require('./components/Locations')
   }
 })

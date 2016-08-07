@@ -58,7 +58,7 @@
 <template>
 
 <div>
-    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">亲子出游<a _@click="onFilter" class="icon header-icon" style="display:none" slot="right">&#xe604;</a></x-header>
+    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">{{pageTitle}}<a _@click="onFilter" class="icon header-icon" style="display:none" slot="right">&#xe604;</a></x-header>
     <sticky>
         <tab :animate="false">
             <tab-item :selected="projectListRanking === 'signCount'" @click="projectListRanking = 'signCount'">人气优先</tab-item>
@@ -77,7 +77,7 @@
                     <h4 class="weui_media_title">{{item.playName}}</h4>
                     <p class="weui_media_desc">活动时间：{{item.projectStartTime | formatTime}} 至 {{item.projectStartTime | formatTime}}</p>
                     <p class="weui_media_desc">活动地点：{{item.activePlace}}</p>
-                    <div class="media-bd-left">
+                    <div class="media-bd-left" v-if="this.classify === 'trip'">
                         <span>￥{{item.projectCost}}</span>
                         <ul>
                             <li><span class="icon">&#xe616;</span>{{item.projectCost}}</li>
@@ -118,7 +118,7 @@
 import {XHeader, Tab, TabItem, XButton, Divider, Sticky} from 'vux-components'
 import XLoader from './Loader'
 
-import {contentList, contentListLoader, projectPageIndex} from '../vuex/getters'
+import {contentList, contentListLoader} from '../vuex/getters'
 import {getContentList} from '../vuex/actions'
 
 export default {
@@ -134,32 +134,40 @@ export default {
   vuex: {
     getters: {
       projectList: contentList,
-      loader: contentListLoader,
-      projectPageIndex: projectPageIndex
+      loader: contentListLoader
     },
     actions: {
       getList: getContentList
     }
   },
-  created () {
-    this.getList({
-      pageIndex: this.projectPageIndex
-    })
-  },
   data () {
     return {
-      projectListRanking: 'signCount'
+      projectListRanking: 'signCount',
+      pageIndex: 0,
+      pageTitle: ''
+    }
+  },
+  route: {
+    data ({to: {params: {classify}}}) {
+      this.classify = classify
+      this.pageTitle = this.classify === 'trip' ? '亲子出游' : '亲子交流'
+      console.log(this.pageTitle)
+      this.getList({
+        url: classify
+      })
     }
   },
   methods: {
     ranking (type) {
       this.projectListRanking = type
-      // this.getList(type)
     },
     loadMore () {
       if (!this.loader) {
+        let _this = this
+        _this.pageIndex++
         this.getList({
-          pageIndex: this.projectPageIndex
+          url: _this.classify,
+          pageIndex: _this.pageIndex
         })
       }
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="fixed-bottom-wrap">
-    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">详情<a v-link="'commentAdd'" class="icon header-icon" slot="right">&#xe608;</a></x-header>
-    <swiper :list="slide" auto></swiper>
+    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">详情<a v-link="{name: 'commentAdd', params: {projectId: '40320283'}}" class="icon header-icon" slot="right">&#xe608;</a></x-header>
+    <swiper :list="slide" auto height="240px"></swiper>
     <div class="article">
       <group style="margin-top:-15px">
         <div class="pad">
@@ -20,7 +20,7 @@
       </group>
 
       <group>
-        <cell v-link="'commentList'" title="综合评价">
+        <cell v-link="{name: 'comment', params: {projectId: '40320283'}}" title="综合评价1">
           <span>(128条评论)</span><rater :value.sync="data5" slot="value" :font-size="20" disabled></rater>
         </cell>
       </group>

@@ -1,149 +1,100 @@
 <template>
   <div>
-    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">评论<a href="" v-link="'commentAdd'" class="icon header-edit" slot="right">&#xe608;</a></x-header>
-    <div class="discuss_list">
-      <div class="discuss_item vux-1px-b" v-for="comment in list" id="comment_{{comment.id}}">
+    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">评论<a v-link="{name: 'commentAdd', params: {projectId: '40320283'}}" class="icon header-icon" slot="right">&#xe608;</a></x-header>
+    <div class="discuss_list" v-infinite-scroll="loadMore()" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+      <div class="discuss_item vux-1px-b" v-for="comment in commentList" id="comment_{{comment.udId}}">
         <div class="discuss_opr">
-          <rater :value.sync="comment.star_num" slot="value" :font-size="20" disabled></rater>
+          <rater :value.sync="comment.point" slot="value" :font-size="20" disabled></rater>
         </div>
         <div class="user_info">
-          <strong class="nickname">{{comment.name}}</strong>
-          <span class="lazy-img avatar" :style="{backgroundImage:'url('+comment.avatar+')'}"></span>
+          <strong class="nickname">{{comment.userLoginName}}</strong>
+          <span class="lazy-img avatar" :style="{backgroundImage:'url('+comment.userHeadImage+')'}"></span>
         </div>
 
         <div class="discuss_message">
-          <span class="discuss_status">{{comment.status}}</span>
-          <div class="discuss_message_content">{{comment.content}}
+          <div class="discuss_message_content">{{comment.comment}}
             <ul class="msg_imgs">
-              <li v-for="src in comment.imgs" class="lazy-img" :style="{backgroundImage:'url('+src+')'}" @click="previewer()"></li>
+              <li v-for="imgs in comment.imagePaths" class="lazy-img" :style="{backgroundImage:'url('+imgs.picUrl+')'}" @click="previewer()"></li>
             </ul>
           </div>
         </div>
         <p class="discuss_extra_info">
-          <span class="pull-right">{{comment.time}}</span>
+          <span class="pull-right">{{comment.updateTime | formatTime}}</span>
           <ul class="icon-list">
-            <li><span v-if="comment.is_like" class="icon">&#xe600;</span><span class="icon" v-else>&#xe602;</span>{{comment.like_num}}</li>
-            <li><span class="icon icon-yuedu">&#xe606;</span>{{comment.look_num}}</li>
+            <li><span @click="setLike(comment)" v-if="comment.statusId" class="icon">&#xe600;</span><span class="icon" @click="setLike(comment)"  v-else>&#xe602;</span>{{comment.agreementNumber}}</li>
+            <!-- <li><span class="icon icon-yuedu">&#xe606;</span>{{comment.look_num}}</li> -->
           </ul>
         </p>
       </div>
     </div>
+    <x-loader :show="loader"></x-loader>
   </div>
 </template>
 
 <script>
-const list = [{
-  id: '97',
-  name: 'Airyland',
-  avatar: 'https://placekitten.com/50/50',
-  time: '昨天',
-  like_num: 4,
-  content: 'Electron 是一款可以利用 Web技术 开发跨平台桌面应用的框架，最初是 Github 发布的 Atom 编辑器衍生出的 Atom Shell，后更名为 Electron。Electron 提供了一个能通过 JavaScript 和 HTML 创建桌面应用的平台，同时集成 Node 来授予网页访问底层系统的权限',
-  look_num: 100,
-  star_num: 3, is_like: false,
-  imgs: [
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100'
-  ]
-}, {
-  id: '98',
-  name: 'Kolf',
-  avatar: 'https://placekitten.com/50/50',
-  time: '2016-6-21',
-  like_num: 4,
-  content: '我来解读，此压缩机是友商提供，松下给予技术支持。',
-  look_num: 60,
-  star_num: 5,
-  imgs: [
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100'
-  ]
-}, {
-  id: '99',
-  name: 'Secret',
-  avatar: 'https://placekitten.com/50/50',
-  time: '2016-6-2',
-  like_num: 1,
-  content: '居然没抢到沙发',
-  look_num: 78,
-  star_num: 4,
-  imgs: [
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100'
-  ]
-}, {
-  id: '100',
-  name: 'Kolf',
-  avatar: 'https://placekitten.com/50/50',
-  time: '2016-6-21',
-  like_num: 3,
-  content: '我来解读，此压缩机是友商提供，松下给予技术支持。',
-  look_num: 100,
-  star_num: 4,
-  imgs: [
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100'
-  ]
-}, {
-  id: '101',
-  name: 'Secret',
-  avatar: 'https://placekitten.com/50/50',
-  time: '2016-6-2',
-  like_num: 5,
-  content: '居然没抢到沙发居然没抢到沙发居然没抢到沙发',
-  look_num: 100,
-  star_num: 3, is_like: false,
-  imgs: [
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100',
-    'https://placekitten.com/100/100'
-  ]
-}]
-
 import {Rater, XHeader} from 'vux-components'
+import XLoader from './Loader'
+
+import {commentList, commentListLoader, isLike} from '../vuex/getters'
+import {getCommentList, setAgreement} from '../vuex/actions'
 
 export default {
   components: {
     Rater,
-    XHeader
+    XHeader,
+    XLoader
+  },
+  vuex: {
+    getters: {
+      commentList: commentList,
+      loader: commentListLoader,
+      isLike: isLike
+    },
+    actions: {
+      getList: getCommentList,
+      setAgreement: setAgreement
+    }
   },
   data () {
     return {
-      list: list,
-      prevImgs: []
+      pageIndex: 0
+    }
+  },
+  route: {
+    data ({to: {params: {projectId}}}) {
+      this.projectId = projectId
+      this.getList({
+        projectId: projectId
+      })
     }
   },
   methods: {
-    previewer (index, id) {
-      console.log(index + '------' + id)
+    loadMore () {
+      if (!this.loader) {
+        let _this = this
+        _this.pageIndex++
+        this.getList({
+          projectId: _this.projectId,
+          pageIndex: _this.pageIndex
+        })
+      }
+    },
+    previewer () {
+      console.log('预览')
+    },
+    setLike (comment) {
+      let status = comment.statusId
+      this.setAgreement({
+        udId: comment.udId,
+        userId: comment.userId,
+        statusId: status
+      })
     }
   }
 }
 </script>
 
 <style lang="less">
-.header-edit{
-  font-size: 24px;
-  color:#fff;
-}
-
 .discuss_list {
   padding-left:15px;
 }

@@ -7,13 +7,9 @@
 </template>
 
 <script>
-import {} from 'vux-components'
 import store from './vuex/store'
 
 export default {
-  components: {
-
-  },
   store
 }
 </script>
@@ -132,8 +128,8 @@ li{
 }
 
 .lazy-img{
-  background: #eee url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATYAAADcCAMAAADNyn3LAAAA7VBMV…OmTZs2tGnTpk0b2rRp06YNbdq0adOGNm3atGlDmzZt2giTpC8rKT9dRAAAAABJRU5ErkJggg==) center center no-repeat;
-  background-size: cover;
+  background: #ccc url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATYAAADcCAMAAADNyn3LAAAA7VBMV…OmTZs2tGnTpk0b2rRp06YNbdq0adOGNm3atGlDmzZt2giTpC8rKT9dRAAAAABJRU5ErkJggg==) center center no-repeat;
+  background-size: 100% auto;
 }
 
 .vux-fixed{
