@@ -1,44 +1,27 @@
 <template>
   <div class="pad-bottom">
-    <x-header style="background-color:#ff9d00" :left-options="{showBack: false}"><div v-link="'locations'" class="header-left" name="left">北京<a class="icon">&#xe614;</a></div>首页<a v-link="'me'" class="icon header-icon" slot="right">&#xe612;</a></x-header>
+    <x-header style="background-color:#ff9d00" :left-options="{showBack: false}"><div v-link="{name: 'locations'}" class="header-left" name="left">{{activePlace.name}}<a class="icon">&#xe614;</a></div>首页<a v-link="{name: 'user', params: {userWeChat: 'gxogle_3'}}" class="icon header-icon" slot="right">&#xe612;</a></x-header>
     <swiper :list="projectColumnList" auto height="240px"></swiper>
 
     <flexbox class="text-primary" :gutter="1" >
-      <flexbox-item class="vux-1px-r">
-        <div class="classify-item" v-link="{name: 'list', params: {classify: 'interact'}}">
-          <h4>亲子交流</h4>
-        <p>大小兼顾</p>
-        </div>
-      </flexbox-item>
       <flexbox-item>
-        <div class="classify-item trips" v-link="{name: 'list', params: {classify: 'trip'}}">
+        <div class="classify-item trips" v-link="{name: 'list', params: {projectColumnCode: 'PCC1000000001'}}">
           <h4>亲子出游</h4>
           <p>精彩出行</p>
         </div>
       </flexbox-item>
-    </flexbox>
-    <x-loader :show="!loader"></x-loader>
-    <div class="weui_panel weui_panel_access" v-if="loader">
-      <div class="weui_panel_hd">亲子交流</div>
-      <div class="weui_panel_bd">
-        <div class="weui_media_box weui_media_appmsg" v-for="(index, item) in projectTripList | orderBy projectListRanking" v-link="item.picUri">
-            <div class="weui_media_hd" style="width:100px;height:100px">
-                <span class="weui_media_appmsg_thumb" alt="" :src="item.picUrl" :style="{'background-image': 'url('+item.picUrl+')'}"></span>
-            </div>
-            <div class="weui_media_bd">
-                <h4 class="weui_media_title">{{item.playName}}</h4>
-                <p class="weui_media_desc">活动时间：{{item.projectStartTime | formatTime}} 至 {{item.projectStartTime | formatTime}}</p>
-                <p class="weui_media_desc">活动地点：{{item.activePlace}}</p>
-
-            </div>
+      <flexbox-item class="vux-1px-r">
+        <div class="classify-item" v-link="{name: 'list', params: {projectColumnCode: 'PCC1000000002'}}">
+          <h4>亲子交流</h4>
+        <p>大小兼顾</p>
         </div>
-      </div>
-      <a class="weui_panel_ft text-center" v-link="{name: 'list', params: {classify: 'interact'}}">查看更多</a>
-    </div>
-    <div class="weui_panel weui_panel_access" v-if="loader">
-      <div class="weui_panel_hd">亲子出游</div>
+      </flexbox-item>
+    </flexbox>
+    <div class="weui_panel weui_panel_access">
+      <div class="weui_panel_hd">{{projectTitle}}</div>
       <div class="weui_panel_bd">
-        <div class="weui_media_box weui_media_appmsg" v-for="(index, item) in projectInteractList | orderBy projectListRanking" v-link="item.picUri">
+        <x-loader :show="loading.show" :loading="loading.loading" :text="loading.text"></x-loader>
+        <div v-show="!loading.show" class="weui_media_box weui_media_appmsg" v-for="(index, item) in projectList | orderBy projectListRanking" v-link="{name: 'details', params: {projectId: item.projectId, playStartTime: item.projectStartTime}}">
             <div class="weui_media_hd" style="width:100px;height:100px">
                 <span class="weui_media_appmsg_thumb" alt="" :src="item.picUrl" :style="{'background-image': 'url('+item.picUrl+')'}"></span>
             </div>
@@ -46,7 +29,7 @@
                 <h4 class="weui_media_title">{{item.playName}}</h4>
                 <p class="weui_media_desc">活动时间：{{item.projectStartTime | formatTime}} 至 {{item.projectStartTime | formatTime}}</p>
                 <p class="weui_media_desc">活动地点：{{item.activePlace}}</p>
-                <div class="media-bd-left">
+                <div class="media-bd-left" v-if="item.projectCost">
                     <span>￥{{item.projectCost}}</span>
                     <ul>
                         <li><span class="icon">&#xe616;</span>{{item.projectCost}}</li>
@@ -55,17 +38,19 @@
                 </div>
             </div>
         </div>
-
       </div>
-      <a class="weui_panel_ft text-center" v-link="{name: 'list', params: {classify: 'trip'}}">查看更多</a> </div>
+      <a class="weui_panel_ft text-center" v-link="{name: 'list', params: {projectColumnCode: 'PCC1000000001'}}">查看更多</a>
+    </div>
   </div>
 </template>
 
 <script>
 import {XHeader, Group, Cell, Swiper, Divider, Flexbox, FlexboxItem} from 'vux-components'
-import {projectColumnList, projectTripList, projectInteractList, homeLoader} from '../vuex/getters'
-import {getProjectColumnList, getProjectTripList, getProjectInteractList} from '../vuex/actions'
+import {projectColumnList} from '../vuex/getters'
+import {getProjectColumnList, getHomeProjectList, getToken} from '../vuex/actions'
 import XLoader from './Loader'
+import randomN from '../utils/randomN'
+import {getLocalStorage} from '../utils/localStorage'
 
 export default {
   components: {
@@ -78,27 +63,56 @@ export default {
     FlexboxItem,
     XLoader
   },
-  vuex: {
-    getters: {
-      projectColumnList: projectColumnList,
-      projectTripList: projectTripList,
-      projectInteractList: projectInteractList,
-      loader: homeLoader
-    },
-    actions: {
-      getProjectColumnList: getProjectColumnList,
-      getProjectTripList: getProjectTripList,
-      getProjectInteractList: getProjectInteractList
+  data () {
+    return {
+      projectTitle: ''
     }
   },
-  created () {
-    this.getProjectColumnList()
-    this.getProjectTripList()
-    this.getProjectInteractList()
+  beforeCompile  () {
+    this.clientId = getLocalStorage('tokenPamrs').clientId || 'eqy123456'
+    this.activePlace = getLocalStorage('user').activePlace || {
+      name: '北京',
+      value: '110100'
+    }
   },
-  data: function () {
-    return {
-      loader1: true
+  vuex: {
+    getters: {
+      projectColumnList,
+      projectList: ({homeProjectList}) => homeProjectList.dataList,
+      loading: ({loading}) => loading
+    },
+    actions: {
+      getProjectColumnList,
+      getHomeProjectList,
+      getToken
+    }
+  },
+  route: {
+    data ({to: {params: {projectColumnCode}}}) {
+      let group = randomN('group_')
+      let vm = this
+
+      if (projectColumnCode === 'PCC1000000001') {
+        this.projectTitle = '亲子出游'
+        this.url = 'getProjectInfoForTrips'
+      } else if (projectColumnCode === 'PCC1000000002') {
+        this.projectTitle = '亲子交流'
+        this.url = 'getProjectInfoForInteract'
+      }
+      this.getToken(vm.clientId, projectColumnCode, function () {
+        vm.getProjectColumnList({
+          group: group,
+          projectColumnCode: projectColumnCode
+        })
+        vm.getHomeProjectList({
+          activePlace: vm.activePlace,
+          group: group,
+          url: vm.url,
+          projectColumnCode: projectColumnCode,
+          pageIndex: 1,
+          pageSize: 5
+        })
+      })
     }
   }
 }

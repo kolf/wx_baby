@@ -1,8 +1,7 @@
 import {REQUEST_COMMENT, ADD_COMMENT, ADD_COMMENT_FAILURE} from '../mutation-types'
 
 const state = {
-  isFetching: true,
-  token: ''
+  isFetching: true
 }
 
 const mutations = {

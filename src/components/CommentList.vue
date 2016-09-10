@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">评论<a v-link="{name: 'commentAdd', params: {projectId: '40320283'}}" class="icon header-icon" slot="right">&#xe608;</a></x-header>
+    <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">评论<a v-link="{name: 'commentAdd', params: {projectId: projectId}}" class="icon header-icon" slot="right">&#xe608;</a></x-header>
     <div class="discuss_list" v-infinite-scroll="loadMore()" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
       <div class="discuss_item vux-1px-b" v-for="comment in commentList" id="comment_{{comment.udId}}">
         <div class="discuss_opr">
@@ -10,7 +10,6 @@
           <strong class="nickname">{{comment.userLoginName}}</strong>
           <span class="lazy-img avatar" :style="{backgroundImage:'url('+comment.userHeadImage+')'}"></span>
         </div>
-
         <div class="discuss_message">
           <div class="discuss_message_content">{{comment.comment}}
             <ul class="msg_imgs">
@@ -22,20 +21,21 @@
           <span class="pull-right">{{comment.updateTime | formatTime}}</span>
           <ul class="icon-list">
             <li><span @click="setLike(comment)" v-if="comment.statusId" class="icon">&#xe600;</span><span class="icon" @click="setLike(comment)"  v-else>&#xe602;</span>{{comment.agreementNumber}}</li>
-            <!-- <li><span class="icon icon-yuedu">&#xe606;</span>{{comment.look_num}}</li> -->
+            <li><span class="icon">&#xe603;</span></li>
           </ul>
         </p>
       </div>
     </div>
-    <x-loader :show="loader"></x-loader>
+    <x-loader :show="loading.show" :loading="loading.loading" :text="loading.text"></x-loader>
   </div>
 </template>
 
 <script>
 import {Rater, XHeader} from 'vux-components'
 import XLoader from './Loader'
+import randomN from '../utils/randomN'
 
-import {commentList, commentListLoader, isLike} from '../vuex/getters'
+import {commentList, isLike} from '../vuex/getters'
 import {getCommentList, setAgreement} from '../vuex/actions'
 
 export default {
@@ -47,36 +47,29 @@ export default {
   vuex: {
     getters: {
       commentList: commentList,
-      loader: commentListLoader,
-      isLike: isLike
+      isLike: isLike,
+      loading: ({loading}) => loading
     },
     actions: {
-      getList: getCommentList,
-      setAgreement: setAgreement
+      getCommentList,
+      setAgreement
     }
   },
   data () {
     return {
-      pageIndex: 0
+      pageIndex: 1
     }
   },
-  route: {
-    data ({to: {params: {projectId}}}) {
-      this.projectId = projectId
-      this.getList({
-        projectId: projectId
-      })
-    }
+  created () {
+    this.group = randomN('group_')
+    this.projectId = this.$route.params.projectId
+    this.getList()
   },
   methods: {
     loadMore () {
-      if (!this.loader) {
-        let _this = this
-        _this.pageIndex++
-        this.getList({
-          projectId: _this.projectId,
-          pageIndex: _this.pageIndex
-        })
+      if (!this.loading.loading) {
+        this.pageIndex++
+        this.getList()
       }
     },
     previewer () {
@@ -88,6 +81,13 @@ export default {
         udId: comment.udId,
         userId: comment.userId,
         statusId: status
+      })
+    },
+    getList () {
+      this.getCommentList({
+        group: this.group,
+        pageIndex: this.pageIndex,
+        projectId: this.projectId
       })
     }
   }

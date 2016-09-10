@@ -2,8 +2,7 @@ import {REQUEST_PROJECT_TRIP_LIST, GET_PROJECT_TRIP_LIST, GET_PROJECT_TRIP_LIST_
 
 const state = {
   isFetching: true,
-  dataList: [],
-  token: ''
+  dataList: []
 }
 
 const mutations = {
@@ -13,7 +12,6 @@ const mutations = {
   [GET_PROJECT_TRIP_LIST] (state, data) {
     state.isFetching = false
     state.dataList = data.dataList
-    state.token = data.token
   },
   [GET_PROJECT_TRIP_LIST_FAILURE] (state) {
     state.isFetching = false

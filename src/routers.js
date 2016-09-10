@@ -1,13 +1,13 @@
 export default (router) => router.map({
-  '/': {
+  '/projectIndex/:projectColumnCode': {
     name: 'index',
     component: require('./components/Home')
   },
-  '/details': {
+  '/details/:projectId/:playStartTime': {
     name: 'details',
     component: require('./components/Details')
   },
-  ':classify': {
+  '/list/:projectColumnCode': {
     name: 'list',
     component: require('./components/List')
   },
@@ -31,15 +31,19 @@ export default (router) => router.map({
     name: 'join',
     component: require('./components/Join')
   },
-  '/information': {
+  '/agreement': {
+    name: 'agreement',
+    component: require('./components/Agreement')
+  },
+  '/information/:userMobile': {
     name: 'information',
     component: require('./components/Information')
   },
-  '/me': {
-    name: 'me',
+  '/user/:userWeChat': {
+    name: 'user',
     component: require('./components/Me')
   },
-  '/order': {
+  '/order/:userId/:orderType': {
     name: 'order',
     component: require('./components/Order')
   },

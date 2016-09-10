@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="pad-bottom">
     <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">查看订单<a slot="right">取消订单</a></x-header>
 
     <card :header="{title:'待支付'}">
       <x-button class="pull-right" slot="header" mini type="primary">去支付</x-button>
       <div slot="content" class="weui_media_box weui_media_appmsg">
-         <div class="weui_media_hd">
+         <div class="weui_media_hd" style="width:100px;height:100px">
            <span class="weui_media_appmsg_thumb"></span>
          </div>
          <div class="weui_media_bd">

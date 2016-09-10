@@ -2,8 +2,7 @@ import {REQUEST_PROJECT_COLUMN_LIST, GET_PROJECT_COLUMN_LIST, GET_PROJECT_COLUMN
 
 const state = {
   isFetching: true,
-  dataList: [],
-  token: ''
+  dataList: []
 }
 
 const mutations = {
@@ -12,7 +11,7 @@ const mutations = {
   },
   [GET_PROJECT_COLUMN_LIST] (state, data) {
     state.isFetching = false
-    state.dataList = data.dataList
+    state.dataList = data.dataList.columnImgsInfoList
     state.dataList.map((item) => {
       item.img = item.picUrl
       item.title = item.picRemark

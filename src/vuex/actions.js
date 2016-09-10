@@ -1,205 +1,460 @@
 import * as types from './mutation-types'
+import randomN from '../utils/randomN'
+import {getLocalStorage, setLocalStorage} from '../utils/localStorage'
 
-const API_ROOT = 'http://192.168.2.102:3000/'
+// const API_ROOT = 'http://localhost:3000/'
+const API_ROOT = 'http://121.40.236.90:8155/sserver/resourceMain'
 
-// 获取活动列表
-export const getCOMMENTList = function ({ dispatch }, data) {
-  dispatch(types.REQUEST_COMMENT_LIST)
-  let url = data.url === 'interact' ? 'getProjectInfoForInteract' : 'getProjectInfoForTrips'
-  let pageIndex = data.pageIndex
-  this.$http.get(API_ROOT + url, {
-    url: url,
-    tokenPamrs: {
-      clientId: 'S000001',
-      group: 'G0001',
-      state: 'S00001',
-      tonken: 'EI211HJ3H1O32131O23HO14H1',
-      userCode: 'U00000001'
-    },
-    urlPamrs: {
-      projectColumnCode: 'PCC1000000001',
-      pageIndex: pageIndex,
-      pageSize: 8
-    }
+// 获取token
+export const getToken = function ({ dispatch }, clientId, projectColumnCode, callback) {
+  let STATE = randomN('state_')
+  this.$http.post('http://121.40.236.90:8155/sserver/getOpenIdAndToken', {
+    clientId: clientId,
+    state: STATE
   }).then(response => {
-    let data = response.data
-    if (data.isSuccess) {
-      if (pageIndex) {
-        dispatch(types.ADD_COMMENT_LIST, data.data)
-      } else {
-        dispatch(types.GET_COMMENT_LIST, data.data)
-      }
-    } else {
-      dispatch(types.GET_COMMENT_LIST_FAILURE, data.retmsg)
+    let data = response.json()
+    if (data.isSuccess === true) {
+      setLocalStorage('tokenPamrs', {
+        state: STATE,
+        clientId: clientId,
+        token: data.token,
+        userCode: data.userCode
+      })
+      setLocalStorage('user', {
+        projectColumnCode: projectColumnCode
+      })
+      callback()
     }
   })
 }
 
 // 获取首页banner
-export const getProjectColumnList = function ({ dispatch }, data) {
+export const getProjectColumnList = function ({ dispatch }, params) {
   dispatch(types.REQUEST_PROJECT_COLUMN_LIST)
-  this.$http.get(API_ROOT + 'getProjectColumnList', {
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.post(API_ROOT, {
     url: 'getProjectColumnList',
-    tokenPamrs: {
-      clientId: 'S000001',
-      group: 'G0001',
-      state: 'S00001',
-      tonken: 'EI211HJ3H1O32131O23HO14H1',
-      userCode: 'U00000001'
-    },
-    urlPamrs: {
-      projectColumnCode: 'PCC1000000001',
-      pageIndex: 0,
-      pageSize: 5
-    }
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: '{"projectColumnCode":"' + params.projectColumnCode + '","pageIndex":"1","pageSize":"10"}'
   }).then(response => {
-    let data = response.data
-    if (data.isSuccess) {
+    let data = response.json()
+    if (data.isSuccess === true) {
       dispatch(types.GET_PROJECT_COLUMN_LIST, data.data)
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
     } else {
       dispatch(types.GET_PROJECT_COLUMN_LIST_FAILURE, data.retmsg)
     }
   })
 }
 
-// 获取首页出游列表
-export const getProjectTripList = function ({ dispatch }, data) {
-  dispatch(types.REQUEST_PROJECT_TRIP_LIST)
-  this.$http.get(API_ROOT + 'getProjectInfoForTrips', {
-    url: 'getProjectInfoForTrips',
-    tokenPamrs: {
-      clientId: 'S000001',
-      group: 'G0001',
-      state: 'S00001',
-      tonken: 'EI211HJ3H1O32131O23HO14H1',
-      userCode: 'U00000001'
-    },
-    urlPamrs: {
-      projectColumnCode: 'PCC1000000001',
-      pageIndex: 0,
-      pageSize: 5
-    }
+// 获取首页活动列表
+export const getHomeProjectList = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_HOME_PROJECT_LIST)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.post(API_ROOT, {
+    url: params.url,
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: '{"projectColumnCode":"' + params.projectColumnCode + '","pageIndex":"' + params.pageIndex + '","pageSize":"' + params.pageSize + '", "activePlace":"' + params.activePlace.value + '"}'
   }).then(response => {
-    let data = response.data
-    if (data.isSuccess) {
-      dispatch(types.GET_PROJECT_TRIP_LIST, data.data)
+    let data = response.json()
+    if (data.isSuccess === true) {
+      if (params.pageIndex > 1) {
+        dispatch(types.ADD_HOME_PROJECT_LIST, data.data)
+      } else {
+        dispatch(types.GET_HOME_PROJECT_LIST, data.data)
+      }
+      if (data.data.total === 0) {
+        dispatch(types.LOADING, {
+          show: true,
+          text: '暂无数据...',
+          loading: false
+        })
+      } else {
+        dispatch(types.LOADING, {
+          show: false
+        })
+      }
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
+      setLocalStorage('user', {
+        activePlace: params.activePlace
+      })
     } else {
-      dispatch(types.GET_PROJECT_TRIP_LIST_FAILURE, data.retmsg)
+      dispatch(types.LOADING, {
+        text: data.retmsg,
+        loading: false,
+        show: true
+      })
     }
   })
 }
 
-// 获取首页交流列表
-export const getProjectInteractList = function ({ dispatch }, data) {
-  dispatch(types.REQUEST_PROJECT_INTERACT_LIST)
-  this.$http.get(API_ROOT + 'getProjectInfoForInteract', {
-    url: 'getProjectInfoForInteract',
-    tokenPamrs: {
-      clientId: 'S000001',
-      group: 'G0001',
-      state: 'S00001',
-      tonken: 'EI211HJ3H1O32131O23HO14H1',
-      userCode: 'U00000001'
-    },
-    urlPamrs: {
-      projectColumnCode: 'PCC1000000001',
-      pageIndex: 0,
-      pageSize: 5
-    }
+// 获取活动列表
+export const getProjectList = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_PROJECT_LIST)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.post(API_ROOT, {
+    url: params.url,
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: '{"projectColumnCode":"' + params.projectColumnCode + '","pageIndex":"' + params.pageIndex + '","pageSize":"' + params.pageSize + '", "activePlace":"' + params.activePlace.value + '"}'
   }).then(response => {
-    let data = response.data
-    if (data.isSuccess) {
-      dispatch(types.GET_PROJECT_INTERACT_LIST, data.data)
+    let data = response.json()
+    if (data.isSuccess === true) {
+      console.log(data.data.dataList.length)
+      if (params.pageIndex > 1) {
+        dispatch(types.ADD_PROJECT_LIST, data.data)
+      } else {
+        dispatch(types.GET_PROJECT_LIST, data.data)
+      }
+      if (data.data.total === 0) {
+        dispatch(types.LOADING, {
+          show: true,
+          text: '暂无数据...',
+          loading: false
+        })
+      } else if (data.data.dataList.length === 0) {
+        dispatch(types.LOADING, {
+          show: true,
+          loading: false,
+          text: '没有更多了...'
+        })
+      } else {
+        dispatch(types.LOADING, {
+          show: false
+        })
+      }
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
+      setLocalStorage('user', {
+        activePlace: params.activePlace
+      })
     } else {
-      dispatch(types.GET_PROJECT_INTERACT_LIST_FAILURE, data.retmsg)
+      dispatch(types.LOADING, {
+        text: data.retmsg,
+        loading: false,
+        show: true
+      })
+    }
+  })
+}
+
+// 获取活动详情
+export const getProjectInfoDetail = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_PROJECT_DETAILS)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.post(API_ROOT, {
+    url: 'getProjectInfoDetail',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: '{"projectId": "' + params.projectId + '","playStartTime": "' + params.playStartTime + '"}'
+  }).then(response => {
+    let data = response.json()
+    if (data.isSuccess === true) {
+      dispatch(types.GET_PROJECT_DETAILS, data.data)
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
+    } else {
+      dispatch(types.GET_PROJECT_DETAILS_FAILURE, data.retmsg)
     }
   })
 }
 
 // 获取评论列表
-export const getCommentList = function ({ dispatch }, data) {
+export const getCommentList = function ({ dispatch }, params) {
   dispatch(types.REQUEST_COMMENT_LIST)
-  let pageIndex = data.pageIndex
-  this.$http.get(API_ROOT + 'getDiscussionList', {
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.post(API_ROOT, {
     url: 'getDiscussionList',
-    tokenPamrs: {
-      clientId: 'S000001',
-      group: 'G0001',
-      state: 'S00001',
-      tonken: 'EI211HJ3H1O32131O23HO14H1',
-      userCode: 'U00000001'
-    },
-    urlPamrs: {
-      projectId: data.projectId,
-      pageIndex: pageIndex,
-      rows: 5
-    }
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: `{"projectId": "${params.projectId}","pageIndex": "${params.pageIndex}","rows": 10}`
   }).then(response => {
-    let data = response.data
-    if (data.isSuccess) {
-      if (pageIndex) {
+    let data = response.json()
+    if (data.isSuccess === true) {
+      if (params.pageIndex > 1) {
         dispatch(types.ADD_COMMENT_LIST, data.data)
       } else {
         dispatch(types.GET_COMMENT_LIST, data.data)
       }
+      if (data.data.total === 0) {
+        dispatch(types.LOADING, {
+          text: '暂无评论...',
+          loading: false,
+          show: true
+        })
+      }
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
     } else {
       dispatch(types.GET_COMMENT_LIST_FAILURE, data.retmsg)
     }
   })
 }
 
-// 更新赞
-export const setAgreement = function ({ dispatch }, data) {
-  dispatch(types.REQUEST_LIKE)
-  this.$http.get(API_ROOT + 'saveAgreement', {
-    url: 'saveAgreement',
-    tokenPamrs: {
-      clientId: 'S000001',
-      group: 'G0001',
-      state: 'S00001',
-      tonken: 'EI211HJ3H1O32131O23HO14H1',
-      userCode: 'U00000001'
-    },
-    urlPamrs: {
-      udId: data.udId,
-      userId: data.userId,
-      statusId: data.statusId
+// 添加评论
+export const setDiscussion = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_COMMENT)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.post(API_ROOT, {
+    url: 'saveDiscussion',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: `{"projectId": "${params.projectId}","userId": "${params.userId}","point": "${params.point}","comment": "${params.comment}","imagePaths": "${params.imagePaths}"}`
+  }).then(response => {
+    let data = response.json()
+    if (data.isSuccess === true) {
+      dispatch(types.ADD_COMMENT, data.data)
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
+    } else {
+      dispatch(types.ADD_COMMENT_FAILURE, data.retmsg)
     }
+  })
+}
+
+// 删除评论
+export const delDiscussion = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_COMMENT)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.get(API_ROOT, {
+    url: 'delDiscussion',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: `{"udId": "${params.udId}"}`
   }).then(response => {
     let data = response.data
-    if (data.isSuccess) {
+    if (data.isSuccess === true) {
+      dispatch(types.REMOVE_COMMENT, data.data)
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
+    } else {
+      dispatch(types.REMOVE_COMMENT_FAILURE, data.retmsg)
+    }
+  })
+}
+
+// 更新赞
+export const setAgreement = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_LIKE)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.get(API_ROOT + 'saveAgreement', {
+    url: 'saveAgreement',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: `{"udId": "${params.udId}","userId": "${params.userId}","statusId": "${params.statusId}"}`
+  }).then(response => {
+    let data = response.json()
+    if (data.isSuccess === true) {
       dispatch(types.ADD_LIKE, data.data)
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
     } else {
       dispatch(types.GET_LIKE_FAILURE, data.retmsg)
     }
   })
 }
 
-// 添加评论
-export const setDiscussion = function ({ dispatch }, data) {
-  dispatch(types.REQUEST_COMMENT)
-  this.$http.get(API_ROOT + 'saveDiscussion', {
-    url: 'saveDiscussion',
-    tokenPamrs: {
-      clientId: 'S000001',
-      group: 'G0001',
-      state: 'S00001',
-      tonken: 'EI211HJ3H1O32131O23HO14H1',
-      userCode: 'U00000001'
-    },
+// 注册用户/更新
+export const userRegister = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_SET_USERINFO)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.post(API_ROOT, {
+    url: 'userRegister',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: params.urlPamrs
+  }).then(response => {
+    let data = response.json()
+    if (data.isSuccess === true) {
+      dispatch(types.SET_USERINFO, data.data)
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
+    } else {
+      dispatch(types.SET_USERINFO_FAILURE, data.retmsg)
+    }
+  })
+}
+
+// 获取用户信息
+export const queryUserInfos = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_GET_USERINFO)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.post(API_ROOT, {
+    url: 'getUserInfo',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: `{"userWeChat": "${params.userWeChat}"}`
+  }).then(response => {
+    let data = response.json()
+    if (data.isSuccess === true) {
+      dispatch(types.GET_USERINFO, data.data)
+    } else {
+      dispatch(types.GET_USERINFO_FAILURE, data.retmsg)
+    }
+  })
+}
+
+// 获取验证码
+export const getMsgCode = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_CAPTCHA)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.post(API_ROOT, {
+    url: 'getMsgCode',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: '{"userMobile":"' + params.userMobile + '"}'
+  }).then(response => {
+    let data = response.json()
+    if (data.isSuccess === true) {
+      dispatch(types.GET_CAPTCHA, data.data)
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
+    } else {
+      dispatch(types.GET_CAPTCHA_FAILURE, data.retmsg)
+    }
+  })
+}
+
+// 校验验证码
+export const checkMsgCode = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_CHECCAPTCHA)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.post(API_ROOT, {
+    url: 'checkMsgCode',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: '{"userMobile":"' + params.userMobile + '", "msgCode":"' + params.msgCode + '"}'
+  }).then(response => {
+    let data = response.json()
+    if (data.isSuccess === true) {
+      if (data.retcode === 'P0') {
+        this.$router.go({name: 'information', params: {userMobile: params.userMobile}})
+      }
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
+    } else {
+      dispatch(types.CHECK_CAPTCHA_FAILURE, data.retmsg)
+    }
+  })
+}
+
+// 订单退款/取消
+export const orderRefund = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_CANCEL_ORDER)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.get(API_ROOT, {
+    url: 'orderRefund',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: `{"orderNo": ${params.orderNo},"orderRemark": ${params.orderRemark}}`
+  }).then(response => {
+    let data = response.json()
+    if (data.isSuccess === true) {
+      dispatch(types.CANCEL_ORDER, data.data)
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
+    } else {
+      dispatch(types.CANCEL_ORDER_FAILURE, data.retmsg)
+    }
+  })
+}
+
+// 查询订单
+export const queryOrder = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_GET_ORDER_LIST)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let orderStatus = ''
+  if (params.orderType === 'wait') {
+    orderStatus = 1
+  } else if (params.orderType === 'complete') {
+    orderStatus = 2
+  }
+  this.$http.post(API_ROOT, {
+    url: 'queryOrder',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: `{"orderUserId": "${params.orderUserId}","orderQueryStartTime": "${params.orderQueryStartTime}","orderQueryEndTime": "${params.orderQueryEndTime}","orderStatus": "${orderStatus}","queryType": 1}`
+  }).then(response => {
+    let data = response.json()
+    if (data.isSuccess === true) {
+      if (params.pageIndex > 1) {
+        dispatch(types.ADD_ORDER_LIST, data.data)
+      } else {
+        dispatch(types.GET_ORDER_LIST, data.data)
+      }
+      setLocalStorage('tokenPamrs', {
+        token: data.data.token
+      })
+    } else {
+      dispatch(types.GET_ORDER_LIST_FAILURE, data.retmsg)
+      dispatch(types.LOADING, {
+        text: data.retmsg,
+        loading: false,
+        show: true
+      })
+    }
+  })
+}
+
+// 创建订单
+export const createorder = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_ADD_ORDER)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.get(API_ROOT, {
+    url: 'createorder',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: `{"orderAmount": ${params.orderAmount},"orderCount": ${params.orderCount},"orderIntegral": ${params.orderIntegral},"orderTallyAmount": ${params.orderTallyAmount},"orderIsIntegral": ${params.orderIsIntegral},"orderFuncCode": ${params.orderFuncCode},"orderPayChannel": ${params.orderPayChannel},"orderUserId": ${params.orderUserId},"orderStakeholderUserId": ${params.orderIsIntegral},"orderProjectId": ${params.orderProjectId},"eorders": ${params.eorders},"orderFee": ${params.orderFee}}`
+  }).then(response => {
+    let data = response.json()
+    if (data.isSuccess === true) {
+      dispatch(types.ADD_ORDER, data.data)
+    } else {
+      dispatch(types.ADD_ORDER_FAILURE, data.retmsg)
+    }
+  })
+}
+
+// 更新订单
+export const uporderStatus = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_UPDATE_ORDER)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.get(API_ROOT, {
+    url: 'uporderStatus',
+    tokenPamrs: JSON.stringify(tokenPamrs),
     urlPamrs: {
-      projectId: data.projectId,
-      userId: data.userId,
-      point: data.point,
-      comment: data.comment,
-      imagePaths: data.imagePaths
+      orderNo: '',
+      orderStatus: '',
+      orderRemark: ''
     }
   }).then(response => {
-    let data = response.data
-    if (data.isSuccess) {
-      dispatch(types.ADD_COMMENT, data.data)
+    let data = response.json()
+    if (data.isSuccess === true) {
+      dispatch(types.UPDATE_ORDER, data.data)
     } else {
-      dispatch(types.ADD_COMMENT_FAILURE, data.retmsg)
+      dispatch(types.UPDATE_ORDER_FAILURE, data.retmsg)
+    }
+  })
+}
+
+// 订单支付
+export const payorder = function ({ dispatch }, params) {
+  dispatch(types.REQUEST_PAY_ORDER)
+  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  this.$http.get(API_ROOT, {
+    url: 'payorder',
+    tokenPamrs: JSON.stringify(tokenPamrs),
+    urlPamrs: {
+      orderNo: '',
+      orderRemark: ''
+    }
+  }).then(response => {
+    let data = response.json()
+    if (data.isSuccess === true) {
+      dispatch(types.PAY_ORDER, data.data)
+    } else {
+      dispatch(types.PAY_ORDER_FAILURE, data.retmsg)
     }
   })
 }

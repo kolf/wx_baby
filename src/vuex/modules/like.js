@@ -13,12 +13,10 @@ const mutations = {
   [REMOVE_LIKE] (state, data) {
     state.isFetching = false
     state.isLike = false
-    state.token = data.token
   },
   [ADD_LIKE] (state, data) {
     state.isFetching = false
     state.isLike = true
-    state.token = data.token
   },
   [REMOVE_LIKE_FAILURE] (state) {
     state.isFetching = false

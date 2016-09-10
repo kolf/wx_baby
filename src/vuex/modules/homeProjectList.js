@@ -1,4 +1,4 @@
-import {REQUEST_COMMENT_LIST, GET_COMMENT_LIST, GET_COMMENT_LIST_FAILURE, ADD_COMMENT_LIST} from '../mutation-types'
+import {REQUEST_HOME_PROJECT_LIST, GET_HOME_PROJECT_LIST, GET_HOME_PROJECT_LIST_FAILURE, ADD_HOME_PROJECT_LIST} from '../mutation-types'
 
 const state = {
   isFetching: true,
@@ -6,18 +6,18 @@ const state = {
 }
 
 const mutations = {
-  [REQUEST_COMMENT_LIST] (state) {
+  [REQUEST_HOME_PROJECT_LIST] (state) {
     state.isFetching = true
   },
-  [GET_COMMENT_LIST] (state, data) {
+  [GET_HOME_PROJECT_LIST] (state, data) {
     state.isFetching = false
     state.dataList = data.dataList
   },
-  [ADD_COMMENT_LIST] (state, data) {
+  [ADD_HOME_PROJECT_LIST] (state, data) {
     state.isFetching = false
     state.dataList = state.dataList.concat(data.dataList)
   },
-  [GET_COMMENT_LIST_FAILURE] (state) {
+  [GET_HOME_PROJECT_LIST_FAILURE] (state) {
     state.isFetching = false
   }
 }

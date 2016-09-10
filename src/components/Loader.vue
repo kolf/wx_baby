@@ -1,6 +1,8 @@
 <template>
   <div class="loader vux-center pad" v-if="show">
-    <spinner type="android" slot="value"></spinner><span class="spinner-text">加载中...</span>
+     <Spinner v-if="loading" type="android" slot="value"></Spinner>
+     <span class="spinner-text">{{text}}</span>
+     <slot></slot>
   </div>
 </template>
 
@@ -12,7 +14,9 @@ export default {
     Spinner
   },
   props: {
-    show: {
+    show: Boolean,
+    text: String,
+    loading: {
       type: Boolean,
       default: true
     }
@@ -21,10 +25,12 @@ export default {
 </script>
 
 <style lang="less">
+.loader{
+  height: 40px;
+}
 .spinner{
   &-text{
     color:#444;
-    padding-left: 5px;
   }
 }
 </style>

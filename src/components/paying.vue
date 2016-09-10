@@ -3,7 +3,7 @@
     <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">立即购买</x-header>
 
      <div class="weui_media_box weui_media_appmsg" style='background:#fff;overflow:hidden'>
-         <div class="weui_media_hd">
+         <div class="weui_media_hd" style="width:100px;height:100px">
            <span class="weui_media_appmsg_thumb"></span>
          </div>
          <div class="weui_media_bd">

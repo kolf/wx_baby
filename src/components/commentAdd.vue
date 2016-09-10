@@ -1,7 +1,7 @@
 <template>
   <div>
     <x-header style="background-color:#ff9d00" _:left-options="{showBack: false}">发表评论<a @click="addComment()" class="icon header-icon" slot="right">&#xe609;</a></x-header>
-    <cell title="总体印象" style="overflow-x:hidden">
+    <cell title="总体印象">
       <rater :value.sync="point" slot="value"></rater>
     </cell>
     <div class="edit-box">
@@ -16,6 +16,8 @@
 <script>
 import {Rater, XHeader, Cell, Group, XTextarea} from 'vux-components'
 import {setDiscussion} from '../vuex/actions'
+import randomN from '../utils/randomN'
+import {getLocalStorage} from '../utils/localStorage'
 
 export default {
   components: {
@@ -26,11 +28,8 @@ export default {
     XTextarea
   },
   vuex: {
-    getters: {
-
-    },
     actions: {
-      setDiscussion: setDiscussion
+      setDiscussion
     }
   },
   data () {
@@ -40,15 +39,20 @@ export default {
       point: 5
     }
   },
+  created () {
+    this.group = randomN('group_')
+    this.userId = getLocalStorage('user').userId
+    this.projectId = this.$route.params.projectId
+  },
   methods: {
     addComment () {
-      let _this = this
-      setDiscussion({
-        projectId: _this.projectId,
-        userId: _this.userId,
-        point: _this.point,
-        comment: _this.comment,
-        imagePaths: _this.imagePaths
+      this.setDiscussion({
+        group: this.group,
+        projectId: this.projectId,
+        userId: this.userId || 34,
+        point: this.point,
+        comment: this.comment,
+        imagePaths: this.imagePaths || []
       })
     }
   }
