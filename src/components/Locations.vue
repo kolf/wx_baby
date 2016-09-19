@@ -59,6 +59,12 @@ export default {
       })
       this.$router.go({name: 'index', params: {projectColumnCode: getLocalStorage('user').projectColumnCode}})
     }
+    // localCity () {
+    //   let myCity = new window.BMap.LocalCity()
+    //   myCity.get((result) => {
+    //     console.log(result)
+    //   })
+    // }
   },
   beforeCompile () {
     this.citys.forEach((city, index) => {

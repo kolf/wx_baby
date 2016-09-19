@@ -4,6 +4,8 @@ import Router from 'vue-router'
 import VueResource from 'vue-resource'
 import configRouter from './routers'
 import infiniteScroll from 'vue-infinite-scroll'
+import wxApi from './wx-api'
+
 Vue.use(infiniteScroll)
 
 Vue.config.devtools = true
@@ -33,13 +35,15 @@ Vue.http.interceptors.push({
 
 Vue.use(Router)
 const router = new Router({
-  history: true,
-  hashbang: false
+  // history: true,
+  // hashbang: false
 })
 configRouter(router)
 
 import { sync } from 'vuex-router-sync'
 import store from './vuex/store'
+
+wxApi.init(Vue)
 
 sync(store, router)
 

@@ -3,12 +3,12 @@ import randomN from '../utils/randomN'
 import {getLocalStorage, setLocalStorage} from '../utils/localStorage'
 
 // const API_ROOT = 'http://localhost:3000/'
-const API_ROOT = 'http://121.40.236.90:8155/sserver/resourceMain'
+const API_ROOT = 'http://115.28.188.91:8080/sserver/resourceMain'
 
 // 获取token
 export const getToken = function ({ dispatch }, clientId, projectColumnCode, callback) {
   let STATE = randomN('state_')
-  this.$http.post('http://121.40.236.90:8155/sserver/getOpenIdAndToken', {
+  this.$http.post('http://115.28.188.91:8080/sserver/getOpenIdAndToken', {
     clientId: clientId,
     state: STATE
   }).then(response => {
