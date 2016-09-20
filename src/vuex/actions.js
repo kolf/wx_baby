@@ -1,17 +1,16 @@
 import * as types from './mutation-types'
-import randomN from '../utils/randomN'
 import {getLocalStorage, setLocalStorage} from '../utils/localStorage'
 
 // const API_ROOT = 'http://localhost:3000/'
 const API_ROOT = 'http://115.28.188.91/sserver/resourceMain'
 
 // 获取token
-export const getToken = function ({ dispatch }, clientId, projectColumnCode, code, callback) {
-  let STATE = randomN('state_')
+export const getToken = function ({ dispatch }, clientId, projectColumnCode, callback) {
+  let STATE = getLocalStorage('urlPamrs').state
   this.$http.post('http://115.28.188.91/sserver/getOpenIdAndToken', {
     clientId: clientId,
     state: STATE,
-    code: code
+    code: getLocalStorage('user').code
   }).then(response => {
     let data = response.json()
     if (data.isSuccess === true) {
@@ -22,8 +21,9 @@ export const getToken = function ({ dispatch }, clientId, projectColumnCode, cod
         userCode: data.userCode
       })
       setLocalStorage('user', {
-        projectColumnCode: projectColumnCode
+        projectColumnCode: projectColumnCode,
       })
+      setLocalStorage('wxUser', data.wxUserInfo)
       callback()
     }
   })
@@ -287,7 +287,7 @@ export const queryUserInfos = function ({ dispatch }, params) {
   this.$http.post(API_ROOT, {
     url: 'getUserInfo',
     tokenPamrs: JSON.stringify(tokenPamrs),
-    urlPamrs: `{"userWeChat": "${params.userWeChat}"}`
+    urlPamrs: `{"userWeChat": "${getLocalStorage('wxUser').openId}"}`
   }).then(response => {
     let data = response.json()
     if (data.isSuccess === true) {
