@@ -1,7 +1,6 @@
 export default {
   init (Vue) {
-    console.log(Vue)
-    Vue.http.post('http://115.28.188.91:8080/sserver/getWxConfig', {pageUrl: window.location.href.split('#')[0]}).then(res => {
+    Vue.http.post('http://115.28.188.91/sserver/getWxConfig', {pageUrl: window.location.href.split('#')[0]}).then(res => {
       let data = res.json()
       window.wx.config({
         appId: data.appId,

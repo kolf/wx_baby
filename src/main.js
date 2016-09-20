@@ -5,6 +5,7 @@ import VueResource from 'vue-resource'
 import configRouter from './routers'
 import infiniteScroll from 'vue-infinite-scroll'
 import wxApi from './wx-api'
+import {login} from './utils/auth'
 
 Vue.use(infiniteScroll)
 
@@ -38,6 +39,12 @@ const router = new Router({
   // history: true,
   // hashbang: false
 })
+
+router.beforeEach(({ to, from, next }) => {
+  window.scrollTo(0, 0)
+  login()
+})
+
 configRouter(router)
 
 import { sync } from 'vuex-router-sync'
