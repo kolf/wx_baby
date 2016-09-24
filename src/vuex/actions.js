@@ -21,7 +21,7 @@ export const getToken = function ({ dispatch }, clientId, projectColumnCode, cal
         userCode: data.userCode
       })
       setLocalStorage('user', {
-        projectColumnCode: projectColumnCode,
+        projectColumnCode: projectColumnCode
       })
       setLocalStorage('wxUser', data.wxUserInfo)
       callback()
