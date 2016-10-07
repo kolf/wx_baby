@@ -50,7 +50,7 @@ import {projectColumnList} from '../vuex/getters'
 import {getProjectColumnList, getHomeProjectList, getToken} from '../vuex/actions'
 import XLoader from './Loader'
 import randomN from '../utils/randomN'
-import {getLocalStorage} from '../utils/localStorage'
+import localStorage from '../utils/localStorage'
 
 export default {
   components: {
@@ -69,8 +69,8 @@ export default {
     }
   },
   beforeCompile  () {
-    this.clientId = getLocalStorage('tokenPamrs').clientId || 'eqy123456'
-    this.activePlace = getLocalStorage('user').activePlace || {
+    this.clientId = localStorage.get('tokenPamrs').clientId || 'eqy123456'
+    this.activePlace = localStorage.get('user').activePlace || {
       name: '北京',
       value: '110100'
     }
@@ -88,7 +88,9 @@ export default {
     }
   },
   route: {
-    data ({to: {params: {projectColumnCode}}}) {
+//    data ({to: {params: {projectColumnCode}}}) {
+    data () {
+      let projectColumnCode = 'PCC1000000001'
       let group = randomN('group_')
       let vm = this
 

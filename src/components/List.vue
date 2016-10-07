@@ -38,7 +38,7 @@
 import {XHeader, Tab, TabItem, XButton, Divider, Sticky} from 'vux-components'
 import XLoader from './Loader'
 import randomN from '../utils/randomN'
-import {getLocalStorage} from '../utils/localStorage'
+import localStorage from '../utils/localStorage'
 import {projectList} from '../vuex/getters'
 import {getProjectList} from '../vuex/actions'
 
@@ -69,7 +69,7 @@ export default {
     }
   },
   beforeCompile () {
-    this.activePlace = getLocalStorage('user').activePlace
+    this.activePlace = localStorage.get('user').activePlace
   },
   route: {
     data ({to: {params: {projectColumnCode}}}) {

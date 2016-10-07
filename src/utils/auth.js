@@ -1,20 +1,27 @@
-import {setLocalStorage, getLocalStorage} from '../utils/localStorage'
+import localStorage from '../utils/localStorage'
 import randomN from '../utils/randomN'
 import getUrlParam from '../utils/getUrlParam'
 
-export function login () {
-  const APPID = 'wx33979a347c26221f'
-  const href = window.location.href
-  if (!getLocalStorage('tokenPamrs').state) { // 跳微信登陆
+export default {
+  state: localStorage.get('tokenPamrs').state,
+  login (query) {
+    const APPID = 'wx33979a347c26221f'
+    const href = window.escape(`http://115.28.188.91?projectIndex=${query.projectIndex}`)
     const STATE = randomN('stare_')
-    setLocalStorage('tokenPamrs', {
+    localStorage.set('tokenPamrs', {
       state: STATE
     })
     window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APPID}&redirect_uri=${href}&response_type=code&scope=snsapi_base&state=${STATE}&connect_redirect=1#wechat_redirect`
-  } else if (getUrlParam('code')) {
+  },
+  getUser (query) {
     let code = getUrlParam('code')
-    setLocalStorage('user', {
-      code: code
-    })
+
+    if (code) {
+      localStorage.set('user', {
+        code: code
+      })
+    } else {
+      this.login(query)
+    }
   }
 }

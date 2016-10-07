@@ -17,7 +17,7 @@
 import {Rater, XHeader, Cell, Group, XTextarea} from 'vux-components'
 import {setDiscussion} from '../vuex/actions'
 import randomN from '../utils/randomN'
-import {getLocalStorage} from '../utils/localStorage'
+import localStorage from '../utils/localStorage'
 
 export default {
   components: {
@@ -41,7 +41,7 @@ export default {
   },
   created () {
     this.group = randomN('group_')
-    this.userId = getLocalStorage('user').userId
+    this.userId = localStorage.get('user').userId
     this.projectId = this.$route.params.projectId
   },
   methods: {

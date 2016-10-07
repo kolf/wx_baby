@@ -1,29 +1,30 @@
 import * as types from './mutation-types'
-import {getLocalStorage, setLocalStorage} from '../utils/localStorage'
+import localStorage from '../utils/localStorage'
+import randomN from '../utils/randomN'
 
 // const API_ROOT = 'http://localhost:3000/'
-const API_ROOT = 'http://115.28.188.91/sserver/resourceMain'
+const API_ROOT = 'http://115.28.188.91:8080/sserver/resourceMain'
 
 // 获取token
 export const getToken = function ({ dispatch }, clientId, projectColumnCode, callback) {
-  let STATE = getLocalStorage('urlPamrs').state
-  this.$http.post('http://115.28.188.91/sserver/getOpenIdAndToken', {
+  let STATE = localStorage.get('urlPamrs').state || randomN('client_')
+  this.$http.post('http://115.28.188.91:8080/sserver/getOpenIdAndToken', {
     clientId: clientId,
     state: STATE,
-    code: getLocalStorage('user').code
+    code: localStorage.get('user').code
   }).then(response => {
     let data = response.json()
     if (data.isSuccess === true) {
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         state: STATE,
         clientId: clientId,
         token: data.token,
         userCode: data.userCode
       })
-      setLocalStorage('user', {
+      localStorage.set('user', {
         projectColumnCode: projectColumnCode
       })
-      setLocalStorage('wxUser', data.wxUserInfo)
+      localStorage.set('wxUser', data.wxUserInfo)
       callback()
     }
   })
@@ -32,7 +33,7 @@ export const getToken = function ({ dispatch }, clientId, projectColumnCode, cal
 // 获取首页banner
 export const getProjectColumnList = function ({ dispatch }, params) {
   dispatch(types.REQUEST_PROJECT_COLUMN_LIST)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
     url: 'getProjectColumnList',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -41,7 +42,7 @@ export const getProjectColumnList = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.GET_PROJECT_COLUMN_LIST, data.data)
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
     } else {
@@ -53,7 +54,7 @@ export const getProjectColumnList = function ({ dispatch }, params) {
 // 获取首页活动列表
 export const getHomeProjectList = function ({ dispatch }, params) {
   dispatch(types.REQUEST_HOME_PROJECT_LIST)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
     url: params.url,
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -77,10 +78,10 @@ export const getHomeProjectList = function ({ dispatch }, params) {
           show: false
         })
       }
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
-      setLocalStorage('user', {
+      localStorage.set('user', {
         activePlace: params.activePlace
       })
     } else {
@@ -96,7 +97,7 @@ export const getHomeProjectList = function ({ dispatch }, params) {
 // 获取活动列表
 export const getProjectList = function ({ dispatch }, params) {
   dispatch(types.REQUEST_PROJECT_LIST)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
     url: params.url,
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -127,10 +128,10 @@ export const getProjectList = function ({ dispatch }, params) {
           show: false
         })
       }
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
-      setLocalStorage('user', {
+      localStorage.set('user', {
         activePlace: params.activePlace
       })
     } else {
@@ -146,7 +147,7 @@ export const getProjectList = function ({ dispatch }, params) {
 // 获取活动详情
 export const getProjectInfoDetail = function ({ dispatch }, params) {
   dispatch(types.REQUEST_PROJECT_DETAILS)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
     url: 'getProjectInfoDetail',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -155,7 +156,7 @@ export const getProjectInfoDetail = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.GET_PROJECT_DETAILS, data.data)
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
     } else {
@@ -167,7 +168,7 @@ export const getProjectInfoDetail = function ({ dispatch }, params) {
 // 获取评论列表
 export const getCommentList = function ({ dispatch }, params) {
   dispatch(types.REQUEST_COMMENT_LIST)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
     url: 'getDiscussionList',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -187,7 +188,7 @@ export const getCommentList = function ({ dispatch }, params) {
           show: true
         })
       }
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
     } else {
@@ -199,7 +200,7 @@ export const getCommentList = function ({ dispatch }, params) {
 // 添加评论
 export const setDiscussion = function ({ dispatch }, params) {
   dispatch(types.REQUEST_COMMENT)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
     url: 'saveDiscussion',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -208,7 +209,7 @@ export const setDiscussion = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.ADD_COMMENT, data.data)
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
     } else {
@@ -220,7 +221,7 @@ export const setDiscussion = function ({ dispatch }, params) {
 // 删除评论
 export const delDiscussion = function ({ dispatch }, params) {
   dispatch(types.REQUEST_COMMENT)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.get(API_ROOT, {
     url: 'delDiscussion',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -229,7 +230,7 @@ export const delDiscussion = function ({ dispatch }, params) {
     let data = response.data
     if (data.isSuccess === true) {
       dispatch(types.REMOVE_COMMENT, data.data)
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
     } else {
@@ -241,7 +242,7 @@ export const delDiscussion = function ({ dispatch }, params) {
 // 更新赞
 export const setAgreement = function ({ dispatch }, params) {
   dispatch(types.REQUEST_LIKE)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.get(API_ROOT + 'saveAgreement', {
     url: 'saveAgreement',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -250,7 +251,7 @@ export const setAgreement = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.ADD_LIKE, data.data)
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
     } else {
@@ -262,7 +263,7 @@ export const setAgreement = function ({ dispatch }, params) {
 // 注册用户/更新
 export const userRegister = function ({ dispatch }, params) {
   dispatch(types.REQUEST_SET_USERINFO)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
     url: 'userRegister',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -271,7 +272,7 @@ export const userRegister = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.SET_USERINFO, data.data)
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
     } else {
@@ -283,11 +284,11 @@ export const userRegister = function ({ dispatch }, params) {
 // 获取用户信息
 export const queryUserInfos = function ({ dispatch }, params) {
   dispatch(types.REQUEST_GET_USERINFO)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
     url: 'getUserInfo',
     tokenPamrs: JSON.stringify(tokenPamrs),
-    urlPamrs: `{"userWeChat": "${getLocalStorage('wxUser').openId}"}`
+    urlPamrs: `{"userWeChat": "${localStorage.get('wxUser').openId}"}`
   }).then(response => {
     let data = response.json()
     if (data.isSuccess === true) {
@@ -301,7 +302,7 @@ export const queryUserInfos = function ({ dispatch }, params) {
 // 获取验证码
 export const getMsgCode = function ({ dispatch }, params) {
   dispatch(types.REQUEST_CAPTCHA)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
     url: 'getMsgCode',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -310,7 +311,7 @@ export const getMsgCode = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.GET_CAPTCHA, data.data)
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
     } else {
@@ -322,7 +323,7 @@ export const getMsgCode = function ({ dispatch }, params) {
 // 校验验证码
 export const checkMsgCode = function ({ dispatch }, params) {
   dispatch(types.REQUEST_CHECCAPTCHA)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
     url: 'checkMsgCode',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -333,7 +334,7 @@ export const checkMsgCode = function ({ dispatch }, params) {
       if (data.retcode === 'P0') {
         this.$router.go({name: 'information', params: {userMobile: params.userMobile}})
       }
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
     } else {
@@ -345,7 +346,7 @@ export const checkMsgCode = function ({ dispatch }, params) {
 // 订单退款/取消
 export const orderRefund = function ({ dispatch }, params) {
   dispatch(types.REQUEST_CANCEL_ORDER)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.get(API_ROOT, {
     url: 'orderRefund',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -354,7 +355,7 @@ export const orderRefund = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.CANCEL_ORDER, data.data)
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
     } else {
@@ -366,7 +367,7 @@ export const orderRefund = function ({ dispatch }, params) {
 // 查询订单
 export const queryOrder = function ({ dispatch }, params) {
   dispatch(types.REQUEST_GET_ORDER_LIST)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   let orderStatus = ''
   if (params.orderType === 'wait') {
     orderStatus = 1
@@ -385,7 +386,7 @@ export const queryOrder = function ({ dispatch }, params) {
       } else {
         dispatch(types.GET_ORDER_LIST, data.data)
       }
-      setLocalStorage('tokenPamrs', {
+      localStorage.set('tokenPamrs', {
         token: data.data.token
       })
     } else {
@@ -402,7 +403,7 @@ export const queryOrder = function ({ dispatch }, params) {
 // 创建订单
 export const createorder = function ({ dispatch }, params) {
   dispatch(types.REQUEST_ADD_ORDER)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.get(API_ROOT, {
     url: 'createorder',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -420,7 +421,7 @@ export const createorder = function ({ dispatch }, params) {
 // 更新订单
 export const uporderStatus = function ({ dispatch }, params) {
   dispatch(types.REQUEST_UPDATE_ORDER)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.get(API_ROOT, {
     url: 'uporderStatus',
     tokenPamrs: JSON.stringify(tokenPamrs),
@@ -442,7 +443,7 @@ export const uporderStatus = function ({ dispatch }, params) {
 // 订单支付
 export const payorder = function ({ dispatch }, params) {
   dispatch(types.REQUEST_PAY_ORDER)
-  let tokenPamrs = Object.assign(getLocalStorage('tokenPamrs'), {group: params.group})
+  let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.get(API_ROOT, {
     url: 'payorder',
     tokenPamrs: JSON.stringify(tokenPamrs),

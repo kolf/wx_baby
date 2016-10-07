@@ -5,7 +5,7 @@ import VueResource from 'vue-resource'
 import configRouter from './routers'
 import infiniteScroll from 'vue-infinite-scroll'
 import wxApi from './wx-api'
-import {login} from './utils/auth'
+import Auth from './utils/auth'
 
 Vue.use(infiniteScroll)
 
@@ -35,19 +35,25 @@ Vue.http.interceptors.push({
 })
 
 Vue.use(Router)
-const router = new Router({
-  // history: true,
-  // hashbang: false
+export const router = new Router({
+  hashbang: true,
+  history: false,
+  saveScrollPosition: true,
+  transitionOnLoad: true
 })
 
-router.beforeEach(({ to, from, next }) => {
-  window.scrollTo(0, 0)
-  login()
+router.beforeEach((transition) => {
+  if (transition.to.auth && !Auth.state) {
+    Auth.login(transition.to.query)
+  } else {
+    Auth.getUser(transition.to.query)
+    transition.next()
+  }
 })
 
 configRouter(router)
 
-import { sync } from 'vuex-router-sync'
+import {sync} from 'vuex-router-sync'
 import store from './vuex/store'
 
 wxApi.init(Vue)

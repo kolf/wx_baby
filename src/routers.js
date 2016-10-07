@@ -1,7 +1,9 @@
 export default (router) => router.map({
-  '/projectIndex/:projectColumnCode': {
+  // '/projectIndex/:projectColumnCode': {
+  '/': {
     name: 'index',
-    component: require('./components/Home')
+    component: require('./components/Home'),
+    auth: true
   },
   '/details/:projectId/:playStartTime': {
     name: 'details',

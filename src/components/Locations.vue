@@ -22,7 +22,7 @@
 import {Search, XHeader} from 'vux-components'
 import map from 'array-map'
 import find from 'array-find'
-import {setLocalStorage, getLocalStorage} from '../utils/localStorage'
+import localStorage from '../utils/localStorage'
 
 const list = require('vux-components/address/list.json')
 
@@ -33,10 +33,10 @@ export default {
   },
   methods: {
     resultClick (item) {
-      setLocalStorage('user', {
+      localStorage.set('user', {
         activePlace: item
       })
-      this.$router.go({name: 'index', params: {projectColumnCode: getLocalStorage('user').projectColumnCode}})
+      this.$router.go({name: 'index', params: {projectColumnCode: localStorage.get('user').projectColumnCode}})
     },
     getResult () {
       this.results = getResult(this.value)
@@ -54,21 +54,16 @@ export default {
       }
     },
     toHome (item) {
-      setLocalStorage('user', {
+      localStorage.set('user', {
         activePlace: item
       })
-      this.$router.go({name: 'index', params: {projectColumnCode: getLocalStorage('user').projectColumnCode}})
+      this.$router.go({name: 'index', params: {projectColumnCode: localStorage.get('user').projectColumnCode}})
     }
-    // localCity () {
-    //   let myCity = new window.BMap.LocalCity()
-    //   myCity.get((result) => {
-    //     console.log(result)
-    //   })
-    // }
+
   },
   beforeCompile () {
-    this.citys.forEach((city, index) => {
-      city.list = map(city.list, (one, index) => {
+    this.citys.forEach((city) => {
+      city.list = map(city.list, (one) => {
         return find(list, item => {
           return item.value === one
         })
