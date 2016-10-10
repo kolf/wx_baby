@@ -1,17 +1,21 @@
 import * as types from './mutation-types'
 import localStorage from '../utils/localStorage'
 import randomN from '../utils/randomN'
+import getUrlParam from '../utils/getUrlParam'
 
 // const API_ROOT = 'http://localhost:3000/'
 const API_ROOT = 'http://115.28.188.91:8080/sserver/resourceMain'
 
 // 获取token
 export const getToken = function ({ dispatch }, clientId, projectColumnCode, callback) {
+  if (localStorage.has('isLogin')) {
+    return
+  }
   let STATE = localStorage.get('urlPamrs').state || randomN('client_')
   this.$http.post('http://115.28.188.91:8080/sserver/getOpenIdAndToken', {
     clientId: clientId,
     state: STATE,
-    code: localStorage.get('user').code
+    code: getUrlParam('code')
   }).then(response => {
     let data = response.json()
     if (data.isSuccess === true) {
@@ -21,6 +25,7 @@ export const getToken = function ({ dispatch }, clientId, projectColumnCode, cal
         token: data.token,
         userCode: data.userCode
       })
+      localStorage.set('isLogin', 1)
       localStorage.set('user', {
         projectColumnCode: projectColumnCode
       })

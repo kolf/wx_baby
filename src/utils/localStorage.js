@@ -6,11 +6,9 @@ export default {
     window.localStorage.setItem(key, JSON.stringify(data))
   },
   has (key) {
-    var d = this.get(key)
-    if (window.typeof(d) === 'undefined' || d == null) {
-      return false
-    } else {
-      return true
-    }
+    return !!window.localStorage.getItem(key)
+  },
+  remove (key) {
+    window.localStorage.removeItem(key)
   }
 }

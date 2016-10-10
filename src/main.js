@@ -43,10 +43,9 @@ export const router = new Router({
 })
 
 router.beforeEach((transition) => {
-  if (transition.to.auth && !Auth.state) {
+  if (transition.to.auth && !Auth.isLogin) {
     Auth.login(transition.to.query)
   } else {
-    Auth.getUser(transition.to.query)
     transition.next()
   }
 })
