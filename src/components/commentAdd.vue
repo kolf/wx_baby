@@ -11,10 +11,11 @@
       <li class="upload-btn"><span class="icon">&#xe611</span></li>
     </ul>
   </div>
+  <Toast :show.sync="push.show">{{push.msg}}</Toast>
 </template>
 
 <script>
-import {Rater, XHeader, Cell, Group, XTextarea} from 'vux-components'
+import {Rater, XHeader, Cell, Group, XTextarea, Toast} from 'vux-components'
 import {setDiscussion} from '../vuex/actions'
 import randomN from '../utils/randomN'
 import localStorage from '../utils/localStorage'
@@ -25,7 +26,8 @@ export default {
     XHeader,
     Cell,
     Group,
-    XTextarea
+    XTextarea,
+    Toast
   },
   vuex: {
     actions: {
@@ -36,7 +38,11 @@ export default {
     return {
       imagePaths: [],
       comment: '',
-      point: 5
+      point: 5,
+      push: {
+        msg: '发布成功',
+        show: true
+      }
     }
   },
   created () {

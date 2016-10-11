@@ -7,7 +7,7 @@
           <rater :value.sync="comment.point" slot="value" :font-size="20" disabled></rater>
         </div>
         <div class="user_info">
-          <strong class="nickname">{{comment.userLoginName}}</strong>
+          <strong class="nickname">{{comment.userRealName}}</strong>
           <span class="lazy-img avatar" :style="{backgroundImage:'url('+comment.userHeadImage+')'}"></span>
         </div>
         <div class="discuss_message">

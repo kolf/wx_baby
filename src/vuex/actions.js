@@ -8,6 +8,7 @@ const API_ROOT = 'http://115.28.188.91:8080/sserver/resourceMain'
 
 // 获取token
 export const getToken = function ({ dispatch }, clientId, projectColumnCode, callback) {
+  callback()
   if (localStorage.has('isLogin')) {
     return
   }
@@ -30,7 +31,7 @@ export const getToken = function ({ dispatch }, clientId, projectColumnCode, cal
         projectColumnCode: projectColumnCode
       })
       localStorage.set('wxUser', data.wxUserInfo)
-      callback()
+      // callback()
     }
   })
 }
@@ -227,7 +228,7 @@ export const setDiscussion = function ({ dispatch }, params) {
 export const delDiscussion = function ({ dispatch }, params) {
   dispatch(types.REQUEST_COMMENT)
   let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
-  this.$http.get(API_ROOT, {
+  this.$http.post(API_ROOT, {
     url: 'delDiscussion',
     tokenPamrs: JSON.stringify(tokenPamrs),
     urlPamrs: `{"udId": "${params.udId}"}`
@@ -248,7 +249,7 @@ export const delDiscussion = function ({ dispatch }, params) {
 export const setAgreement = function ({ dispatch }, params) {
   dispatch(types.REQUEST_LIKE)
   let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
-  this.$http.get(API_ROOT + 'saveAgreement', {
+  this.$http.post(API_ROOT, {
     url: 'saveAgreement',
     tokenPamrs: JSON.stringify(tokenPamrs),
     urlPamrs: `{"udId": "${params.udId}","userId": "${params.userId}","statusId": "${params.statusId}"}`
