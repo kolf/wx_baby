@@ -19,6 +19,11 @@ export const getToken = function ({ dispatch }, clientId, projectColumnCode, cal
     code: getUrlParam('code')
   }).then(response => {
     let data = response.json()
+
+    localStorage.set('tokenPamrs', {   // 调试用
+      token: '5D345840E27647219C459732D4569DBF'
+    })
+
     if (data.isSuccess === true) {
       localStorage.set('tokenPamrs', {
         state: STATE,

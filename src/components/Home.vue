@@ -23,7 +23,7 @@
         <x-loader :show="loading.show" :loading="loading.loading" :text="loading.text"></x-loader>
         <div v-show="!loading.show" class="weui_media_box weui_media_appmsg" v-for="(index, item) in projectList | orderBy projectListRanking" v-link="{name: 'details', params: {projectId: item.projectId, playStartTime: item.projectStartTime}}">
             <div class="weui_media_hd" style="width:100px;height:100px">
-                <span class="weui_media_appmsg_thumb" alt="" :src="item.picUrl" :style="{'background-image': 'url('+item.picUrl+')'}"></span>
+                <span class="weui_media_appmsg_thumb" :style="{'background-image': 'url('+item.picUrl+')'}"></span>
             </div>
             <div class="weui_media_bd">
                 <h4 class="weui_media_title">{{item.playName}}</h4>

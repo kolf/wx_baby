@@ -1,8 +1,6 @@
 <template>
   <div>
-    <router-view
-    transition
-    transition-mode="out-in"></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -62,7 +60,7 @@ li{
   url('//at.alicdn.com/t/font_1472921771_9469836.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
   url('//at.alicdn.com/t/font_1472921771_9469836.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
-                                
+
 
 .icon {
   font-family: 'iconfont';

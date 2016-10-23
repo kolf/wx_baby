@@ -41,7 +41,7 @@ export default {
       point: 5,
       push: {
         msg: '发布成功',
-        show: true
+        show: false
       }
     }
   },

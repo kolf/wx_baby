@@ -51,7 +51,7 @@
     </group> -->
 
     <confirm :show.sync="showPhone" title="手机号" @on-cancel="onCancel()" @on-confirm="onConfirm()">
-      <p style="text-align:center;">修改手机号需要向新的手机进行验证</p>
+      <p style="text-align:center;">修改手机号需要向新的手机进行验证{{}}</p>
       <x-input type="tel" class="modal-input" :value.sync="userInfo.newPhone" is-type="china-mobile" placeholder="请输入新的手机号"></x-input>
       <x-input placeholder="请输入验证码" class="weui_vcode modal-verify">
         <captcha-btn :phone.sync="userInfo.newPhone" :group="group"></captcha-btn>
