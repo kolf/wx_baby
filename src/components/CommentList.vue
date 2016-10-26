@@ -8,7 +8,7 @@
         </div>
         <div class="user_info">
           <strong class="nickname">{{comment.userRealName}}</strong>
-          <span class="lazy-img avatar" :style="{backgroundImage:'url('+comment.userHeadImage+')'}"></span>
+          <span class="lazy-img avatar" _:style="{backgroundImage:'url('+comment.userHeadImage+')'}"></span>
         </div>
         <div class="discuss_message">
           <div class="discuss_message_content">{{comment.comment}}
@@ -20,7 +20,7 @@
         <p class="discuss_extra_info">
           <span class="pull-right">{{comment.updateTime | formatTime}}</span>
           <ul class="icon-list">
-            <li><span @click="setLike(comment)" v-if="comment.statusId" class="icon">&#xe600;</span><span class="icon" @click="setLike(comment)"  v-else>&#xe602;</span>{{comment.agreementNumber}}</li>
+            <li><span @click="setLike(comment)" v-if="comment.isAgreement == 0" class="icon">&#xe600;</span><span class="icon" @click="setLike(comment)"  v-else>&#xe602;</span>{{comment.agreementNumber}}</li>
             <li><span class="icon">&#xe603;</span></li>
           </ul>
         </p>
@@ -76,11 +76,13 @@ export default {
       console.log('预览')
     },
     setLike (comment) {
-      let status = comment.statusId
+      let status = comment.isAgreement === 0 ? 1 : 0
       this.setAgreement({
         udId: comment.udId,
         userId: comment.userId,
         statusId: status
+      }, (data) => {
+        console.log(data)
       })
     },
     getList () {

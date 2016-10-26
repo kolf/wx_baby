@@ -18,7 +18,7 @@
       </group>
 
       <group>
-        <cell v-link="{name: 'comment', params: {projectId: projectDetail.projectId}}" title="综合评价">
+        <cell v-link="{name: 'comment', params: {projectId: projectDetail.projectId || 14}}" title="综合评价">
           <span>({{projectDetail.discussionCount}}条评论)</span><rater :value.sync="projectDetail.averageScore" slot="value" :font-size="20" disabled></rater>
         </cell>
       </group>

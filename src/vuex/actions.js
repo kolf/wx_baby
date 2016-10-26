@@ -21,7 +21,10 @@ export const getToken = function ({ dispatch }, clientId, projectColumnCode, cal
     let data = response.json()
 
     localStorage.set('tokenPamrs', {   // 调试用
-      token: '5D345840E27647219C459732D4569DBF'
+      token: '5D345840E27647219C459732D4569DBF',
+      state: STATE,
+      clientId: clientId,
+      userCode: 'VST2120241397812055'
     })
 
     if (data.isSuccess === true) {
@@ -53,9 +56,11 @@ export const getProjectColumnList = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.GET_PROJECT_COLUMN_LIST, data.data)
-      localStorage.set('tokenPamrs', {
+
+      Object.assign(tokenPamrs, {
         token: data.data.token
       })
+      localStorage.set('tokenPamrs', tokenPamrs)
     } else {
       dispatch(types.GET_PROJECT_COLUMN_LIST_FAILURE, data.retmsg)
     }
@@ -89,9 +94,11 @@ export const getHomeProjectList = function ({ dispatch }, params) {
           show: false
         })
       }
-      localStorage.set('tokenPamrs', {
+      tokenPamrs = Object.assign(tokenPamrs, {
         token: data.data.token
       })
+
+      localStorage.set('tokenPamrs', tokenPamrs)
       localStorage.set('user', {
         activePlace: params.activePlace
       })
@@ -139,9 +146,11 @@ export const getProjectList = function ({ dispatch }, params) {
           show: false
         })
       }
-      localStorage.set('tokenPamrs', {
+      tokenPamrs = Object.assign(tokenPamrs, {
         token: data.data.token
       })
+
+      localStorage.set('tokenPamrs', tokenPamrs)
       localStorage.set('user', {
         activePlace: params.activePlace
       })
@@ -167,9 +176,11 @@ export const getProjectInfoDetail = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.GET_PROJECT_DETAILS, data.data)
-      localStorage.set('tokenPamrs', {
+      tokenPamrs = Object.assign(tokenPamrs, {
         token: data.data.token
       })
+
+      localStorage.set('tokenPamrs', tokenPamrs)
     } else {
       dispatch(types.GET_PROJECT_DETAILS_FAILURE, data.retmsg)
     }
@@ -199,9 +210,10 @@ export const getCommentList = function ({ dispatch }, params) {
           show: true
         })
       }
-      localStorage.set('tokenPamrs', {
+      tokenPamrs = Object.assign(tokenPamrs, {
         token: data.data.token
       })
+      localStorage.set('tokenPamrs', tokenPamrs)
     } else {
       dispatch(types.GET_COMMENT_LIST_FAILURE, data.retmsg)
     }
@@ -209,7 +221,7 @@ export const getCommentList = function ({ dispatch }, params) {
 }
 
 // 添加评论
-export const setDiscussion = function ({ dispatch }, params) {
+export const setDiscussion = function ({ dispatch }, params, cb) {
   dispatch(types.REQUEST_COMMENT)
   let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
@@ -219,10 +231,11 @@ export const setDiscussion = function ({ dispatch }, params) {
   }).then(response => {
     let data = response.json()
     if (data.isSuccess === true) {
-      dispatch(types.ADD_COMMENT, data.data)
-      localStorage.set('tokenPamrs', {
+      tokenPamrs = Object.assign(tokenPamrs, {
         token: data.data.token
       })
+      localStorage.set('tokenPamrs', tokenPamrs)
+      cb && cb(data)
     } else {
       dispatch(types.ADD_COMMENT_FAILURE, data.retmsg)
     }
@@ -241,9 +254,11 @@ export const delDiscussion = function ({ dispatch }, params) {
     let data = response.data
     if (data.isSuccess === true) {
       dispatch(types.REMOVE_COMMENT, data.data)
-      localStorage.set('tokenPamrs', {
+      tokenPamrs = Object.assign(tokenPamrs, {
         token: data.data.token
       })
+
+      localStorage.set('tokenPamrs', tokenPamrs)
     } else {
       dispatch(types.REMOVE_COMMENT_FAILURE, data.retmsg)
     }
@@ -251,7 +266,7 @@ export const delDiscussion = function ({ dispatch }, params) {
 }
 
 // 更新赞
-export const setAgreement = function ({ dispatch }, params) {
+export const setAgreement = function ({ dispatch }, params, cb) {
   dispatch(types.REQUEST_LIKE)
   let tokenPamrs = Object.assign(localStorage.get('tokenPamrs'), {group: params.group})
   this.$http.post(API_ROOT, {
@@ -261,10 +276,11 @@ export const setAgreement = function ({ dispatch }, params) {
   }).then(response => {
     let data = response.json()
     if (data.isSuccess === true) {
-      dispatch(types.ADD_LIKE, data.data)
-      localStorage.set('tokenPamrs', {
-        token: data.data.token
+      tokenPamrs = Object.assign(tokenPamrs, {
+        token: data.data ? data.data.token : 'Token'
       })
+      localStorage.set('tokenPamrs', tokenPamrs)
+      cb && cb(data)
     } else {
       dispatch(types.GET_LIKE_FAILURE, data.retmsg)
     }
@@ -283,9 +299,11 @@ export const userRegister = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.SET_USERINFO, data.data)
-      localStorage.set('tokenPamrs', {
+      tokenPamrs = Object.assign(tokenPamrs, {
         token: data.data.token
       })
+
+      localStorage.set('tokenPamrs', tokenPamrs)
     } else {
       dispatch(types.SET_USERINFO_FAILURE, data.retmsg)
     }
@@ -322,9 +340,11 @@ export const getMsgCode = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.GET_CAPTCHA, data.data)
-      localStorage.set('tokenPamrs', {
+      tokenPamrs = Object.assign(tokenPamrs, {
         token: data.data.token
       })
+
+      localStorage.set('tokenPamrs', tokenPamrs)
     } else {
       dispatch(types.GET_CAPTCHA_FAILURE, data.retmsg)
     }
@@ -345,9 +365,11 @@ export const checkMsgCode = function ({ dispatch }, params) {
       if (data.retcode === 'P0') {
         this.$router.go({name: 'information', params: {userMobile: params.userMobile}})
       }
-      localStorage.set('tokenPamrs', {
+      tokenPamrs = Object.assign(tokenPamrs, {
         token: data.data.token
       })
+
+      localStorage.set('tokenPamrs', tokenPamrs)
     } else {
       dispatch(types.CHECK_CAPTCHA_FAILURE, data.retmsg)
     }
@@ -366,9 +388,11 @@ export const orderRefund = function ({ dispatch }, params) {
     let data = response.json()
     if (data.isSuccess === true) {
       dispatch(types.CANCEL_ORDER, data.data)
-      localStorage.set('tokenPamrs', {
+      tokenPamrs = Object.assign(tokenPamrs, {
         token: data.data.token
       })
+
+      localStorage.set('tokenPamrs', tokenPamrs)
     } else {
       dispatch(types.CANCEL_ORDER_FAILURE, data.retmsg)
     }
@@ -397,9 +421,11 @@ export const queryOrder = function ({ dispatch }, params) {
       } else {
         dispatch(types.GET_ORDER_LIST, data.data)
       }
-      localStorage.set('tokenPamrs', {
+      tokenPamrs = Object.assign(tokenPamrs, {
         token: data.data.token
       })
+
+      localStorage.set('tokenPamrs', tokenPamrs)
     } else {
       dispatch(types.GET_ORDER_LIST_FAILURE, data.retmsg)
       dispatch(types.LOADING, {

@@ -59,6 +59,11 @@ export default {
         point: this.point,
         comment: this.comment,
         imagePaths: this.imagePaths || []
+      }, () => {
+        this.$set('push.show', true)
+        setTimeout(() => {
+          this.$router.go({name: 'comment', params: {projectId: this.projectId}})
+        }, 1000)
       })
     }
   }
