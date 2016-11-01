@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {XHeader, XButton, Cell, Group, XInput, Address, AddressChinaData, PopupPicker, Picker, Datetime} from 'vux-components'
+import {XHeader, XButton, Cell, Group, XInput, Address, AddressChinaData, PopupPicker, Picker, Datetime, Toast} from 'vux-components'
 import value2name from 'vux/src/filters/value2name'
 import randomN from '../utils/randomN'
 import {userRegister} from '../vuex/actions'
@@ -33,7 +33,8 @@ export default {
     Address,
     Datetime,
     PopupPicker,
-    Picker
+    Picker,
+    Toast
   },
   vuex: {
     actions: {
@@ -57,7 +58,7 @@ export default {
     },
     reg () {
       let kids = []
-      kids.push(`{"kidsName": "${this.kidsName}", "kidsBirthday": "${this.kidsBirthday}", "kidsGender": 1}`)
+      kids.push(`{"type":"add","kidsName": "${this.kidsName}", "kidsBirthday": "${this.kidsBirthday}", "kidsGender": 1}`)
       this.userRegister({
         group: this.group,
         urlPamrs: `{"type": "add","userId": "","userRealName": "${this.userRealName}","userMobile": "${this.moble}","userWeChat": "gxogle_3","userEmail": "${this.userEmail}","userCity": "${this.userCity}","kidsJsonArray": [${kids}]}`

@@ -57,3 +57,6 @@ export const CHECK_CAPTCHA_FAILURE = 'CHECK_CAPTCHA_FAILURE'
 export const SET_TOKEN = 'SET_TOKEN'
 export const SET_USER = 'SET_USER'
 export const LOADING = 'LOADING'
+
+export const SHOW_MSG = 'SHOW_MSG'
+export const HIDE_MSG = 'HIDE_MSG'

@@ -1,14 +1,13 @@
 import * as types from './mutation-types'
 import localStorage from '../utils/localStorage'
 import randomN from '../utils/randomN'
-import getUrlParam from '../utils/getUrlParam'
 
 // const API_ROOT = 'http://localhost:3000/'
 const API_ROOT = 'http://115.28.188.91:8080/sserver/resourceMain'
 
 // 获取token
 export const getToken = function ({ dispatch }, clientId, projectColumnCode, callback) {
-  callback()
+  // callback()
   if (localStorage.has('isLogin')) {
     return
   }
@@ -16,16 +15,15 @@ export const getToken = function ({ dispatch }, clientId, projectColumnCode, cal
   this.$http.post('http://115.28.188.91:8080/sserver/getOpenIdAndToken', {
     clientId: clientId,
     state: STATE,
-    code: getUrlParam('code')
+    code: localStorage.get('code')
   }).then(response => {
     let data = response.json()
-
-    localStorage.set('tokenPamrs', {   // 调试用
-      token: '5D345840E27647219C459732D4569DBF',
-      state: STATE,
-      clientId: clientId,
-      userCode: 'VST2120241397812055'
-    })
+    // localStorage.set('tokenPamrs', {   // 调试用
+    //   token: '5D345840E27647219C459732D4569DBF',
+    //   state: STATE,
+    //   clientId: clientId,
+    //   userCode: 'VST2120241397812055'
+    // })
 
     if (data.isSuccess === true) {
       localStorage.set('tokenPamrs', {
@@ -61,9 +59,9 @@ export const getProjectColumnList = function ({ dispatch }, params) {
         token: data.data.token
       })
       localStorage.set('tokenPamrs', tokenPamrs)
-    } else {
-      dispatch(types.GET_PROJECT_COLUMN_LIST_FAILURE, data.retmsg)
     }
+  }, response => {
+    dispatch(types.GET_PROJECT_COLUMN_LIST_FAILURE)
   })
 }
 
@@ -304,8 +302,12 @@ export const userRegister = function ({ dispatch }, params) {
       })
 
       localStorage.set('tokenPamrs', tokenPamrs)
-    } else {
-      dispatch(types.SET_USERINFO_FAILURE, data.retmsg)
+      if (data.retcode !== 'P0') {
+        dispatch(types.SHOW_MSG, {
+          content: data.retmsg,
+          show: true
+        })
+      }
     }
   })
 }

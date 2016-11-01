@@ -1,11 +1,16 @@
 import Vue from 'vue'
 import App from './App'
 import Router from 'vue-router'
+import VueValidator from 'vue-validator'
+import { sync } from 'vuex-router-sync'
+import store from './vuex/store'
 import VueResource from 'vue-resource'
 import configRouter from './routers'
 import infiniteScroll from 'vue-infinite-scroll'
 import wxApi from './wx-api'
 import Auth from './utils/auth'
+import getUrlParam from './utils/getUrlParam'
+import localStorage from './utils/localStorage'
 
 Vue.use(infiniteScroll)
 
@@ -35,6 +40,7 @@ Vue.http.interceptors.push({
 })
 
 Vue.use(Router)
+Vue.use(VueValidator)
 export const router = new Router({
   hashbang: true,
   history: false,
@@ -43,7 +49,11 @@ export const router = new Router({
 })
 
 router.beforeEach((transition) => {
-  if (transition.to.auth && !Auth.isLogin) {
+  const code = getUrlParam('code')
+  if (code) {
+    localStorage.set('code', code)
+  }
+  if (transition.to.auth && !Auth.authentication) {
     Auth.login(transition.to.query)
   } else {
     transition.next()
@@ -51,12 +61,9 @@ router.beforeEach((transition) => {
 })
 
 configRouter(router)
-
-import {sync} from 'vuex-router-sync'
-import store from './vuex/store'
+sync(store, router)
 
 wxApi.init(Vue)
 
-sync(store, router)
-
 router.start(App, '#app')
+window.router = router

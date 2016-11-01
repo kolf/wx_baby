@@ -11,10 +11,12 @@ import projectDetail from './modules/projectDetail'
 import order from './modules/order'
 import captcha from './modules/captcha'
 import loading from './modules/loading'
-
-Vue.use(Vuex)
+import msg from './modules/msg'
 
 const debug = process.env.NODE_ENV !== 'production'
+Vue.use(Vuex)
+Vue.config.debug = debug
+Vue.config.warnExpressionErrors = false
 
 export default new Vuex.Store({
   strict: debug,
@@ -29,6 +31,7 @@ export default new Vuex.Store({
     projectDetail,
     order,
     captcha,
-    loading
+    loading,
+    msg
   }
 })

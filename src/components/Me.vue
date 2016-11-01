@@ -29,6 +29,7 @@
         </flexbox-item>
       </flexbox>
     <group title="联系方式">
+      <cell title="退出登陆" @click="logout()"></cell>
       <cell title="手机号" @click="showPhone=true" link="javascript:;" :value="userInfo.userMobile">
         <span class="icon" slot="icon">&#xe60b;</span>
       </cell>
@@ -71,6 +72,7 @@ import CaptchaBtn from './CaptchaBtn'
 import value2name from 'vux/src/filters/value2name'
 import randomN from '../utils/randomN'
 import {queryUserInfos} from '../vuex/actions'
+import {logout} from '../utils/auth'
 
 export default {
   components: {
@@ -91,7 +93,8 @@ export default {
       userInfo: ({user}) => user.userInfo
     },
     actions: {
-      queryUserInfos
+      queryUserInfos,
+      logout
     }
   },
   beforeCompile () {
